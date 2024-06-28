@@ -4,7 +4,14 @@ import { paths } from "@app/routes";
 import { TextField } from "@app/ui/texfield";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getFieldError, passwordRegex } from "@lib/form";
-import { Box, Button, Divider, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -33,7 +40,7 @@ export const SignUp = () => {
   const { authorize } = useAuth();
   const navigate = useNavigate();
 
-  const { control, handleSubmit } = useForm<SignUpFormValues>({
+  const { control, handleSubmit, setError } = useForm<SignUpFormValues>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -66,6 +73,19 @@ export const SignUp = () => {
             onSuccess: (user) => {
               authorize(user);
               navigate(paths.dashboard);
+            },
+            onError: (error) => {
+              const requestError = error as unknown as {
+                errors?: Record<string, string>;
+              };
+
+              if (requestError.errors) {
+                Object.keys(requestError.errors).map((errorKey) => {
+                  setError(errorKey as "root", {
+                    message: requestError.errors?.[errorKey],
+                  });
+                });
+              }
             },
           });
         })}
@@ -137,8 +157,9 @@ export const SignUp = () => {
           type="submit"
           color="success"
           sx={{ color: "white" }}
+          disabled={$signUp.isPending}
         >
-          Sign up
+          {$signUp.isPending ? <CircularProgress size={18} /> : "Sign up"}
         </Button>
       </Box>
 

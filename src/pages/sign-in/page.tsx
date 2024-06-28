@@ -7,6 +7,7 @@ import { getFieldError } from "@lib/form";
 import {
   Box,
   Button,
+  CircularProgress,
   Divider,
   FormHelperText,
   Typography,
@@ -44,15 +45,6 @@ export const SignIn = () => {
 
   const $sighIn = useMutation({
     mutationFn: signIn,
-    onError: (error) => {
-      const requestError = error as unknown as {
-        errors: Record<string, string>;
-      };
-
-      setError("email", {});
-      setError("password", {});
-      setError("root", { message: requestError.errors["credentials"]! });
-    },
   });
 
   return (
@@ -73,6 +65,17 @@ export const SignIn = () => {
             onSuccess: (user) => {
               authorize(user);
               navigate(paths.dashboard);
+            },
+            onError: (error) => {
+              const requestError = error as unknown as {
+                errors: Record<string, string>;
+              };
+
+              setError("email", {});
+              setError("password", {});
+              setError("root", {
+                message: requestError.errors["credentials"]!,
+              });
             },
           });
         })}
@@ -111,8 +114,9 @@ export const SignIn = () => {
           type="submit"
           color="success"
           sx={{ color: "white" }}
+          disabled={$sighIn.isPending}
         >
-          Sign in
+          {$sighIn.isPending ? <CircularProgress size={18} /> : "Sign in"}
         </Button>
       </Box>
 
