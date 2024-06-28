@@ -1,8 +1,11 @@
-import { useAuthUser } from "@app/auth";
+import { updateUser } from "@api/user";
+import { useAuth, useAuthUser } from "@app/auth";
+import { Button } from "@app/ui/button";
 import { TextField } from "@app/ui/texfield";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getFieldError } from "@lib/form";
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -15,12 +18,14 @@ const FormSchema = z.object({
 type FormValues = z.infer<typeof FormSchema>;
 
 export const InfoTab = () => {
+  const { refetchRefreshToken } = useAuth();
   const authUser = useAuthUser();
 
   const {
     control,
     handleSubmit,
     formState: { isDirty },
+    reset,
   } = useForm<FormValues>({
     defaultValues: {
       firstName: authUser?.user.firstName ?? "",
@@ -29,6 +34,12 @@ export const InfoTab = () => {
     },
     resolver: zodResolver(FormSchema),
   });
+
+  const $credentials = useMutation({
+    mutationFn: updateUser,
+  });
+
+  console.log("out!!");
 
   return (
     <Box
@@ -40,7 +51,18 @@ export const InfoTab = () => {
         gap: 2,
       }}
       onSubmit={handleSubmit((values) => {
-        console.log(values);
+        $credentials.mutate(
+          {
+            userId: authUser?.user.userId ?? "",
+            ...values,
+          },
+          {
+            onSuccess: (user) => {
+              refetchRefreshToken();
+              reset(user);
+            },
+          }
+        );
       })}
     >
       <Controller
@@ -81,6 +103,7 @@ export const InfoTab = () => {
         color="success"
         sx={{ color: "white" }}
         disabled={!isDirty}
+        isLoading={$credentials.isPending}
       >
         Save
       </Button>

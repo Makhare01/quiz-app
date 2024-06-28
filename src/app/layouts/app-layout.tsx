@@ -1,3 +1,4 @@
+import { GlobalLoadingIndicator } from "@app/ui/global-loading-indicator";
 import { Box } from "@mui/material";
 import { ReactNode } from "react";
 import { NavBar } from "./components";
@@ -17,6 +18,7 @@ export const AppLayout = ({ children }: Props) => {
         alignItems: "stretch",
       }}
     >
+      <GlobalLoadingIndicator />
       <NavBar />
       <Box
         sx={{

@@ -1,11 +1,16 @@
+import { paths } from "@app/routes";
+import { GlobalLoadingIndicator } from "@app/ui/global-loading-indicator";
 import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   children: ReactNode;
 };
 
 export const AuthLayout = ({ children }: Props) => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -16,7 +21,13 @@ export const AuthLayout = ({ children }: Props) => {
         alignItems: "stretch",
       }}
     >
-      <Box sx={{ p: 2 }}>
+      <GlobalLoadingIndicator />
+      <Box
+        sx={{ p: 2, cursor: "pointer" }}
+        onClick={() => {
+          navigate(paths.signIn);
+        }}
+      >
         <Typography variant="h1" fontWeight={700}>
           Quiz
         </Typography>

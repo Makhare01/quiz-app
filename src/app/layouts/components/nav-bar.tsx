@@ -1,8 +1,12 @@
+import { paths } from "@app/routes";
 import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { AppMenu } from "./app-menu";
 import { UserProfileButton } from "./user-profile-button";
 
 export const NavBar = () => {
+  const navigate = useNavigate();
+
   return (
     <Box
       sx={{
@@ -14,7 +18,13 @@ export const NavBar = () => {
         py: 1,
       }}
     >
-      <Typography variant="h1" fontWeight={700} width="15%">
+      <Typography
+        variant="h1"
+        sx={{ width: "15%", fontWeight: 700, cursor: "pointer" }}
+        onClick={() => {
+          navigate(paths.dashboard);
+        }}
+      >
         Quiz
       </Typography>
 

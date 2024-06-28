@@ -1,13 +1,19 @@
+import { updateUserPassword } from "@api/user";
+import { useAuth, useAuthUser } from "@app/auth";
+import { Button } from "@app/ui/button";
 import { TextField } from "@app/ui/texfield";
+import { ToastContent } from "@app/ui/toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getFieldError, passwordRegex } from "@lib/form";
-import { Box, Button } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { z } from "zod";
 
 const FormSchema = z
   .object({
-    oldPassword: z.string().email(),
+    oldPassword: z.string(),
     newPassword: z.string().min(8).regex(passwordRegex, {
       message:
         "Must contain 8 characters, a digit, and an uppercase letter and a special symbol",
@@ -19,23 +25,31 @@ const FormSchema = z
     path: ["passwordConfirm"],
   });
 
-type FormValues = z.infer<typeof FormSchema>;
+export type UpdatePasswordFormValues = z.infer<typeof FormSchema>;
 
 export const PasswordTab = () => {
-  const { control, handleSubmit, watch } = useForm<FormValues>({
-    defaultValues: {
-      oldPassword: "",
-      newPassword: "",
-      passwordConfirm: "",
-    },
-    resolver: zodResolver(FormSchema),
-  });
+  const { refetchRefreshToken } = useAuth();
+  const authUser = useAuthUser();
+
+  const { control, handleSubmit, watch, reset } =
+    useForm<UpdatePasswordFormValues>({
+      defaultValues: {
+        oldPassword: "",
+        newPassword: "",
+        passwordConfirm: "",
+      },
+      resolver: zodResolver(FormSchema),
+    });
 
   const [oldPassword, newPassword, passwordConfirm] = watch([
     "oldPassword",
     "newPassword",
     "passwordConfirm",
   ]);
+
+  const $updatePassword = useMutation({
+    mutationFn: updateUserPassword,
+  });
 
   return (
     <Box
@@ -47,7 +61,23 @@ export const PasswordTab = () => {
         gap: 2,
       }}
       onSubmit={handleSubmit((values) => {
-        console.log(values);
+        $updatePassword.mutate(
+          { userId: authUser?.user.userId ?? "", ...values },
+          {
+            onSuccess: () => {
+              refetchRefreshToken();
+              reset();
+
+              toast.success(
+                <ToastContent title="Success">
+                  <Typography variant="body2">
+                    Successfully updated password
+                  </Typography>
+                </ToastContent>
+              );
+            },
+          }
+        );
       })}
     >
       <Controller
@@ -95,8 +125,12 @@ export const PasswordTab = () => {
         color="success"
         sx={{ color: "white" }}
         disabled={
-          oldPassword === "" || newPassword === "" || passwordConfirm === ""
+          oldPassword === "" ||
+          newPassword === "" ||
+          passwordConfirm === "" ||
+          $updatePassword.isPending
         }
+        isLoading={$updatePassword.isPending}
       >
         Change
       </Button>
