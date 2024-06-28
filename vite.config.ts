@@ -3,8 +3,8 @@ import { defineConfig } from "vite";
 import checker from "vite-plugin-checker";
 import pluginTsconfigPaths from "vite-tsconfig-paths";
 
-// const PROXY_BASE_URL = "http://localhost:8000" as const;
-const PROXY_BASE_URL = "https://lineate-quiz-app-server.vercel.app/" as const;
+const PROXY_BASE_URL = "http://localhost:8000" as const;
+// const PROXY_BASE_URL = "https://lineate-quiz-app-server.vercel.app" as const;
 
 // https://vitejs.dev/config/
 export default defineConfig({
