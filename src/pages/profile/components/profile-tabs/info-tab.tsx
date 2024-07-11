@@ -39,8 +39,6 @@ export const InfoTab = () => {
     mutationFn: updateUser,
   });
 
-  console.log("out!!");
-
   return (
     <Box
       component="form"

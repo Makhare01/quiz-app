@@ -20,6 +20,7 @@ export const theme = createTheme({
     },
     success: {
       main: "#31CD63",
+      light: "#acebc1",
     },
     text: {
       primary: "#212121",
@@ -60,7 +61,7 @@ export const theme = createTheme({
       lineHeight: "36px",
     },
     h3: {
-      fontSize: "20px",
+      fontSize: "22px",
       fontWeight: "inherit",
       lineHeight: "34px",
     },

@@ -71,7 +71,7 @@ export const PasswordTab = () => {
               toast.success(
                 <ToastContent title="Success">
                   <Typography variant="body2">
-                    Successfully updated password
+                    Password successfully updated
                   </Typography>
                 </ToastContent>
               );
