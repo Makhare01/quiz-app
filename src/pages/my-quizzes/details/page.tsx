@@ -12,7 +12,7 @@ export const MyQuizDetailsPage = () => {
 
   const $quizDetails = useQuery({
     queryFn: () => getQuizDetails({ quizId }),
-    queryKey: qk.quiz.details.toKey(),
+    queryKey: qk.quiz.details.toKeyWithArgs({ quizId }),
   });
 
   return (
@@ -34,7 +34,7 @@ export const MyQuizDetailsPage = () => {
               >
                 <Box>
                   <Typography variant="h1" fontWeight={700}>
-                    #{quiz.name}
+                    {quiz.name}
                   </Typography>
 
                   <Typography
