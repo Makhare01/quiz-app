@@ -2,28 +2,26 @@ import { TabPanel } from "@components/tab-panel";
 import { Box, Tab, Tabs } from "@mui/material";
 import { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
-import { InfoTab } from "./info-tab";
-import { PasswordTab } from "./password-tab";
 
-type TabTypes = "info" | "password";
+type TabTypes = "users" | "questions";
 
 const tabs: Array<{ label: string; value: TabTypes; tabComponent: ReactNode }> =
   [
     {
-      label: "Personal Information",
-      value: "info",
-      tabComponent: <InfoTab />,
+      label: "Users",
+      value: "users",
+      tabComponent: <Box />,
     },
     {
-      label: "Change Password",
-      value: "password",
-      tabComponent: <PasswordTab />,
+      label: "Questions",
+      value: "questions",
+      tabComponent: <Box />,
     },
   ];
 
-export const ProfileTabs = () => {
+export const DetailsTabs = () => {
   const [searchparams, setSearchParams] = useSearchParams();
-  const activeTab = (searchparams.get("tab") ?? "info") as TabTypes;
+  const activeTab = (searchparams.get("tab") ?? "users") as TabTypes;
 
   const handleChange = (_event: React.SyntheticEvent, newValue: TabTypes) => {
     searchparams.set("tab", newValue);
@@ -31,7 +29,7 @@ export const ProfileTabs = () => {
   };
 
   return (
-    <Box sx={{ width: 1, maxWidth: { xs: 420, sm: 680 } }}>
+    <Box sx={{ width: 1 }}>
       <Box
         sx={{
           width: 1,
@@ -66,6 +64,7 @@ export const ProfileTabs = () => {
               disableRipple
               sx={{
                 width: "50%",
+                maxWidth: "50%",
                 zIndex: 1,
                 "&.Mui-selected": {
                   color: "text.primary",
