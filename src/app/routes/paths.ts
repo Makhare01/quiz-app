@@ -3,6 +3,8 @@ export const paths = {
   signUp: "/sign-up",
   dashboard: "/",
   myQuizzes: "/my-quizzes",
+  myQuizDetails: "/my-quizzes/:quizId",
+  addQuizQuestions: "/my-quizzes/:quizId/add-questions",
   profile: "/profile",
   createQuiz: "/create-quiz",
 } as const;

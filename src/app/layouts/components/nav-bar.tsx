@@ -1,3 +1,4 @@
+import { IconQuiz } from "@app/assets/icons";
 import { paths } from "@app/routes";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -18,15 +19,22 @@ export const NavBar = () => {
         py: 1,
       }}
     >
-      <Typography
-        variant="h1"
-        sx={{ width: "15%", fontWeight: 700, cursor: "pointer" }}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          cursor: "pointer",
+          width: "15%",
+        }}
         onClick={() => {
           navigate(paths.dashboard);
         }}
       >
-        Quiz
-      </Typography>
+        <IconQuiz color="success" sx={{ color: " success" }} />
+        <Typography variant="h1" sx={{ fontWeight: 700 }}>
+          uiz
+        </Typography>
+      </Box>
 
       <Box
         width="70%"

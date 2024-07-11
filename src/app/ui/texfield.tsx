@@ -23,6 +23,7 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(
             position: "static",
             fontSize: "14px",
             lineHeight: "26px",
+            fontWeight: 700,
             zIndex: 0,
           }}
         >
@@ -42,12 +43,14 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(
               },
             },
             "& fieldset": { border: props.error ? "error.main" : "none" },
+            ...props.sx,
           }}
           inputProps={{
             style: {
               color: theme.palette.text.primary,
               fontWeight: 700,
             },
+            ...props.inputProps,
           }}
         />
         <FormHelperText
