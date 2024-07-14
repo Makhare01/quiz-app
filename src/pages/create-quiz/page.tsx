@@ -15,7 +15,6 @@ import { Box, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { recordToOptions } from "@utils/options";
 import { quizCategoryOptions, quizVisibilityOptions } from "@utils/quizzes";
-import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { generatePath, useBlocker, useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -57,10 +56,6 @@ export const CreateQuiz = () => {
     mutationFn: createQuiz,
   });
 
-  useEffect(() => {
-    console.log({ state: blocker.state });
-  }, [blocker.state]);
-
   return (
     <Box
       component="form"
@@ -77,6 +72,7 @@ export const CreateQuiz = () => {
             navigate(
               generatePath(paths.addQuizQuestions, {
                 quizId: quiz._id,
+                questionsId: quiz.questionsId,
               })
             );
           },

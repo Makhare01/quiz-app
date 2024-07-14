@@ -5,7 +5,7 @@ import {
   Select as MuiSelect,
   SelectProps,
 } from "@mui/material";
-import { forwardRef } from "react";
+import { forwardRef, ReactNode } from "react";
 
 export type SelectOption<T extends string = string> = {
   label: string;
@@ -14,10 +14,11 @@ export type SelectOption<T extends string = string> = {
 
 type Props = SelectProps & {
   options: Array<SelectOption>;
+  itemAction?: (index?: number) => ReactNode;
 };
 
 export const Select = forwardRef<HTMLSelectElement, Props>(
-  ({ options, label, ...props }, ref) => {
+  ({ options, itemAction, label, ...props }, ref) => {
     return (
       <Box width={1}>
         <InputLabel
@@ -85,7 +86,15 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
                 py: 2,
               }}
             >
-              {label}
+              <Box
+                width={1}
+                display="flex"
+                alignItems="Center"
+                justifyContent="space-between"
+              >
+                {label}
+                {itemAction?.(index)}
+              </Box>
             </MenuItem>
           ))}
         </MuiSelect>

@@ -16,6 +16,7 @@
     "@loadable/component": "^5.16.4",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
+    "@mui/x-date-pickers": "^7.10.0",
     "@tanstack/react-query": "^5.48.0",
     "@tanstack/react-query-devtools": "^5.48.0",
     "constate": "^3.3.2",
@@ -23,6 +24,7 @@
     "jwt-decode": "^4.0.0",
     "promise-retry": "^2.0.1",
     "react": "^18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.13",
     "react-helmet-async": "^2.0.5",
@@ -38,9 +40,11 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.3.1",
     "@types/loadable__component": "^5.13.9",
     "@types/promise-retry": "^1.1.6",
     "@types/react": "^18.2.66",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "^18.2.22",
     "@types/react-helmet": "^6.1.11",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

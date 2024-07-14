@@ -1,13 +1,15 @@
 import { qk } from "@api/query-keys";
 import { getQuizDetails } from "@api/quiz";
+import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { match, P } from "ts-pattern";
 import { DetailsTabs } from "../components";
 
 export const MyQuizDetailsPage = () => {
+  const navigate = useNavigate();
   const { quizId } = useParams() as { quizId: string };
 
   const $quizDetails = useQuery({
@@ -53,6 +55,23 @@ export const MyQuizDetailsPage = () => {
                   gap={2}
                   flex={1}
                 >
+                  <Button
+                    variant="outlined"
+                    color="success"
+                    onClick={() => {
+                      navigate(
+                        generatePath(paths.addQuizQuestions, {
+                          quizId: quiz._id,
+                          questionsId: quiz.questionsId,
+                        })
+                      );
+                    }}
+                    sx={{
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    Add questions
+                  </Button>
                   <Button variant="outlined">Edit</Button>
                   <Button variant="outlined" color="error">
                     Delete

@@ -3,7 +3,7 @@ import { request } from "@lib/request";
 import { UpdatePasswordFormValues } from "@pages/profile/components/profile-tabs";
 
 export const updateUser = async (input: User) => {
-  return await request("/api/user/credentials").post(
+  return await request("/api/user/credentials").patch(
     {
       body: input,
     },
@@ -14,7 +14,7 @@ export const updateUser = async (input: User) => {
 export const updateUserPassword = async (
   input: UpdatePasswordFormValues & { userId: string }
 ) => {
-  return await request("/api/user/change-password").post({
+  return await request("/api/user/change-password").patch({
     body: input,
   });
 };

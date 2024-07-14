@@ -1,12 +1,12 @@
-import { Box, Typography } from '@mui/material'
-import { ReactNode } from 'react'
+import { Box, Typography } from "@mui/material";
+import { ReactNode } from "react";
 
 export const ToastContent = ({
   title,
   children,
 }: {
-  title: string
-  children: ReactNode
+  title: string;
+  children: ReactNode;
 }) => {
   return (
     <Box>
@@ -16,5 +16,5 @@ export const ToastContent = ({
 
       {children}
     </Box>
-  )
-}
+  );
+};

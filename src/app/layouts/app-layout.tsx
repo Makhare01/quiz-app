@@ -22,7 +22,7 @@ export const AppLayout = ({ children }: Props) => {
       <NavBar />
       <Box
         sx={{
-          height: 1,
+          maxHeight: "calc(100% - 75px)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

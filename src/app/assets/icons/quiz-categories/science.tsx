@@ -3,7 +3,7 @@ import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 export const IconCategoryScience = ({ ...props }: SvgIconProps) => {
   return (
     <SvgIcon {...props} viewBox="0 0 24 24">
-      <g clip-path="url(#clip0_70_52)">
+      <g clipPath="url(#clip0_70_52)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"

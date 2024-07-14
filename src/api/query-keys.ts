@@ -1,4 +1,5 @@
 import { buildModuleCacheKey } from "@lib/react-query-utils";
+import { GetQuizQuestionInput } from "./questions";
 import { GetQuizDetailsInput } from "./quiz";
 
 /**
@@ -24,5 +25,6 @@ export const qk = buildModuleCacheKey({
     details: (input: GetQuizDetailsInput) => [input],
     publicQuizzes: null,
     myQuizzes: null,
+    quizQuestion: (input: GetQuizQuestionInput) => [input],
   },
 });

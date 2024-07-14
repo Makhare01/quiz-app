@@ -17,6 +17,7 @@ export const NavBar = () => {
         alignItems: "center",
         px: 3,
         py: 1,
+        height: 75,
       }}
     >
       <Box

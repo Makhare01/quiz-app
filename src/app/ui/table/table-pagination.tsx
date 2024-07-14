@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 
-import { Select } from "../select";
 import { IconArrow } from "@app/assets/icons";
+import { Select } from "../select";
 
 export type Pagination = {
   page: number;
