@@ -46,8 +46,10 @@ const TQuizUser = z.object({
   userId: z.string(),
   email: z.string().email(),
   username: z.string(),
-  answers: z.array(TQuizUserAnswer),
+  answer: TQuizUserAnswer,
 });
+
+export type QuizUser = z.infer<typeof TQuizUser>;
 
 export const TQuiz = z.object({
   _id: z.string(),

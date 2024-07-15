@@ -4,6 +4,8 @@ import { ToastContainer } from "@app/ui/toast";
 import { GlobalQueryClientProvider } from "@lib/query-utils";
 import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { ReactNode, Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Helmet, HelmetProvider } from "react-helmet-async";
@@ -32,18 +34,20 @@ type Props = {
 export const Providers = ({ children }: Props) => {
   return (
     <Suspense fallback={null}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <HelmetProvider>
-          <Helmet defaultTitle="Quiz app" titleTemplate="%s · Quiz app" />
-          {/* // TODO */}
-          <ErrorBoundary fallback={null}>
-            <GlobalQueryClientProvider>
-              <AuthProvider>{children}</AuthProvider>
-            </GlobalQueryClientProvider>
-          </ErrorBoundary>
-        </HelmetProvider>
-      </ThemeProvider>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <HelmetProvider>
+            <Helmet defaultTitle="Quiz app" titleTemplate="%s · Quiz app" />
+            {/* // TODO */}
+            <ErrorBoundary fallback={null}>
+              <GlobalQueryClientProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </GlobalQueryClientProvider>
+            </ErrorBoundary>
+          </HelmetProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
     </Suspense>
   );
 };

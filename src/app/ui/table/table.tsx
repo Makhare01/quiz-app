@@ -1,20 +1,20 @@
+import { IconArrow } from "@app/assets/icons";
 import {
-  TableContainer,
-  Table as MuTable,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableCellProps,
-  TableBody,
-  SxProps,
-  Theme,
-  Typography,
   Box,
   IconButton,
+  Table as MuTable,
+  SxProps,
+  TableBody,
+  TableCell,
+  TableCellProps,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Theme,
+  Typography,
 } from "@mui/material";
 import { ReactNode } from "react";
 import { Pagination, TablePagination } from "./table-pagination";
-import { IconArrow } from "@app/assets/icons";
 
 export type SortItem = {
   column: string;
@@ -64,6 +64,7 @@ export const Table = ({
         maxHeight: 1,
         overflow: "auto",
         flex: 1,
+        bgcolor: "background.paper",
         ...containerSx,
       }}
     >
@@ -74,7 +75,6 @@ export const Table = ({
               position: "sticky",
               top: 0,
               left: 0,
-              bgcolor: "background.default",
               zIndex: 10,
             }}
           >
