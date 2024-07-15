@@ -290,7 +290,7 @@ export const AddQuestionForm = ({
             bottom: 0,
             color: "white",
           }}
-          disabled={questions.length === 0 || $updateQuestions.isPending}
+          disabled={$updateQuestions.isPending}
           isLoading={$updateQuestions.isPending}
         >
           Save

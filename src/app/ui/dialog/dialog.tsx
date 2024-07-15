@@ -8,7 +8,7 @@ import {
   IconButton,
   Dialog as MuiDialog,
 } from "@mui/material";
-import { ReactNode } from "react";
+import { FormEvent, ReactNode } from "react";
 import { Button } from "../button";
 
 type Props = DialogProps & {
@@ -18,6 +18,16 @@ type Props = DialogProps & {
   children: ReactNode;
   confirmText?: string;
   denyText?: string;
+  confirmButtonColor?:
+    | "inherit"
+    | "error"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "info"
+    | "warning";
+  formId?: string;
+  isFormSubmitting?: boolean;
 };
 
 export const Dialog = ({
@@ -27,6 +37,9 @@ export const Dialog = ({
   children,
   denyText,
   confirmText,
+  confirmButtonColor,
+  formId,
+  isFormSubmitting,
   ...dialogProps
 }: Props) => {
   return (
@@ -42,7 +55,9 @@ export const Dialog = ({
         justifyContent="space-between"
         pr={1}
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle fontWeight={700} fontSize={18}>
+          {title}
+        </DialogTitle>
         <IconButton onClick={onClose}>
           <IconClose sx={{ fontSize: 28 }} />
         </IconButton>
@@ -50,23 +65,42 @@ export const Dialog = ({
       <DialogContent
         sx={{ borderTop: 1, borderBottom: 1, borderColor: "divider", py: 0 }}
       >
-        <Box py={3}>{children}</Box>
+        <Box
+          py={3}
+          {...(formId && {
+            component: "form",
+            id: formId,
+            onSubmit: (event: FormEvent) => {
+              event.preventDefault();
+              onConfirm();
+            },
+          })}
+        >
+          {children}
+        </Box>
       </DialogContent>
       <DialogActions
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          px: 3,
+          py: 2,
         }}
       >
-        <Button variant="outlined" color="error" onClick={onClose}>
+        <Button variant="outlined" onClick={onClose}>
           {denyText ?? "Cancel"}
         </Button>
         <Button
           variant="outlined"
-          color="success"
-          onClick={onConfirm}
+          color={confirmButtonColor ?? "success"}
+          onClick={!formId ? onConfirm : undefined}
           autoFocus
+          {...(formId && {
+            type: "submit",
+            form: formId,
+            isLoading: isFormSubmitting,
+          })}
         >
           {confirmText ?? "Confirm"}
         </Button>

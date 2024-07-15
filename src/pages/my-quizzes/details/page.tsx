@@ -6,7 +6,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { match, P } from "ts-pattern";
-import { DetailsTabs } from "../components";
+import { DeleteQuizButton, DetailsTabs } from "../components";
 
 export const MyQuizDetailsPage = () => {
   const navigate = useNavigate();
@@ -70,16 +70,27 @@ export const MyQuizDetailsPage = () => {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    Add questions
+                    {quiz.questionsCount > 0
+                      ? "Edit questions"
+                      : "Add questions"}
                   </Button>
-                  <Button variant="outlined">Edit</Button>
-                  <Button variant="outlined" color="error">
-                    Delete
+                  <Button
+                    variant="outlined"
+                    onClick={() => {
+                      navigate(
+                        generatePath(paths.editQuiz, {
+                          quizId: quiz._id,
+                        })
+                      );
+                    }}
+                  >
+                    Edit
                   </Button>
+                  <DeleteQuizButton quizId={quiz._id} quizName={quiz.name} />
                 </Box>
               </Box>
 
-              <DetailsTabs />
+              <DetailsTabs questionsId={quiz.questionsId} users={quiz.users} />
             </Box>
           );
         })

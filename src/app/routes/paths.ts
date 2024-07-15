@@ -4,6 +4,7 @@ export const paths = {
   dashboard: "/",
   myQuizzes: "/my-quizzes",
   myQuizDetails: "/my-quizzes/:quizId",
+  editQuiz: "/my-quizzes/:quizId/edit",
   addQuizQuestions: "/my-quizzes/:quizId/:questionsId/add-questions",
   profile: "/profile",
   createQuiz: "/create-quiz",
