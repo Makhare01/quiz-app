@@ -47,6 +47,7 @@ const useAuthContext = () => {
     authorize,
     unauthorize,
     user,
+    refetchRefreshToken: $refreshToken.mutate,
   };
 };
 

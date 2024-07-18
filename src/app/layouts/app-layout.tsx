@@ -1,5 +1,7 @@
+import { GlobalLoadingIndicator } from "@app/ui/global-loading-indicator";
 import { Box } from "@mui/material";
 import { ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 import { NavBar } from "./components";
 
 type Props = {
@@ -7,6 +9,10 @@ type Props = {
 };
 
 export const AppLayout = ({ children }: Props) => {
+  const location = useLocation();
+
+  const isPassingQuizPage = location.pathname.includes("/pass");
+
   return (
     <Box
       sx={{
@@ -17,10 +23,12 @@ export const AppLayout = ({ children }: Props) => {
         alignItems: "stretch",
       }}
     >
-      <NavBar />
+      <GlobalLoadingIndicator />
+      {!isPassingQuizPage && <NavBar />}
       <Box
         sx={{
           height: 1,
+          maxHeight: isPassingQuizPage ? 1 : "calc(100% - 75px)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

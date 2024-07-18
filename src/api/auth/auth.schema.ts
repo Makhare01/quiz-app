@@ -7,6 +7,8 @@ export const TUser = z.object({
   email: z.string(),
 });
 
+export type User = z.infer<typeof TUser>;
+
 export const TAuthUser = z.object({
   accessToken: z.string(),
   user: TUser,

@@ -8,9 +8,39 @@ export const authRoutes = [
     title: "Dashboard",
   }),
   createRoute({
+    path: paths.startQuiz,
+    factory: () => import("../../pages/start-quiz"),
+    title: "Start quiz",
+  }),
+  createRoute({
+    path: paths.passQuiz,
+    factory: () => import("../../pages/pass-quiz"),
+    title: "Pass the quiz",
+  }),
+  createRoute({
+    path: paths.quizResult,
+    factory: () => import("../../pages/result"),
+    title: "Quiz result",
+  }),
+  createRoute({
     path: paths.myQuizzes,
     factory: () => import("../../pages/my-quizzes"),
     title: "My quizzes",
+  }),
+  createRoute({
+    path: paths.myQuizDetails,
+    factory: () => import("../../pages/my-quizzes/details"),
+    title: "My quiz details",
+  }),
+  createRoute({
+    path: paths.editQuiz,
+    factory: () => import("../../pages/my-quizzes/details/edit"),
+    title: "Edit quiz",
+  }),
+  createRoute({
+    path: paths.addQuizQuestions,
+    factory: () => import("../../pages/my-quizzes/details/add-questions"),
+    title: "Add quiz questions",
   }),
   createRoute({
     path: paths.createQuiz,

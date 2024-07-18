@@ -62,8 +62,8 @@ export const UserProfileButton = () => {
           sx={{
             color:
               location.pathname === paths.profile
-                ? "success.main"
-                : "text.primary",
+                ? "text.primary"
+                : "text.disabled",
           }}
         >
           {authUser?.user.firstName.charAt(0)}
