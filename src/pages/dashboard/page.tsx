@@ -29,8 +29,6 @@ export const Dashboard = () => {
     search: search ?? "",
   };
 
-  console.log({ search: search ? "ki" : "ara" });
-
   const $publicQuizzes = useQuery({
     queryKey: qk.quiz.publicQuizzes.toKeyWithArgs(args),
     queryFn: () => getPublicQuizzes(args),
