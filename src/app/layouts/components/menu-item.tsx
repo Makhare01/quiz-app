@@ -17,7 +17,7 @@ export const MenItem = ({ menuItem }: Props) => {
         fontSize: 18,
         color: isActive
           ? theme.palette.text.primary
-          : theme.palette.text.secondary,
+          : theme.palette.text.disabled,
         textDecoration: "none",
       })}
     >

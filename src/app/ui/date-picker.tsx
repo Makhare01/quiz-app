@@ -1,9 +1,9 @@
 import { FormControl, FormHelperText, InputLabel } from "@mui/material";
-import { forwardRef } from "react";
 import {
   DatePicker as MuiDatePicker,
   DatePickerProps as MuiDatePickerProps,
 } from "@mui/x-date-pickers";
+import { forwardRef } from "react";
 
 type DatePickerProps = MuiDatePickerProps<Date> & {
   helperText?: string;
@@ -33,13 +33,6 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
         <MuiDatePicker
           ref={ref}
           {...props}
-          sx={
-            {
-              // bgcolor: "background.default",
-              // border: 0,
-              // borderRadius: 2,
-            }
-          }
           slotProps={{
             textField: {
               sx: {
@@ -50,6 +43,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
                     border: "none",
                   },
                 },
+                ...props.sx,
               },
             },
           }}
@@ -61,7 +55,7 @@ export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
             fontWeight: 400,
             fontSize: "12px",
             lineHeight: "18px",
-            color: "text.secondary",
+            color: "text.disabled",
           }}
         >
           {helperText}

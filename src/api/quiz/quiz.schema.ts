@@ -33,20 +33,16 @@ export const TQuizCategoryOptions = z.union([
 
 export type QuizCategoryOptions = z.infer<typeof TQuizCategoryOptions>;
 
-const TQuizStatus = z.union([z.literal("IN_PROGRESS"), z.literal("READY")]);
+const TQuizStatus = z.union([z.literal("DRAFT"), z.literal("READY")]);
 
 export type QuizStatus = z.infer<typeof TQuizStatus>;
-
-const TQuizUserAnswer = z.object({
-  answerId: z.string(),
-  score: z.string(),
-});
 
 const TQuizUser = z.object({
   userId: z.string(),
   email: z.string().email(),
   username: z.string(),
-  answer: TQuizUserAnswer,
+  answerId: z.string(),
+  isFinished: z.boolean().optional(),
 });
 
 export type QuizUser = z.infer<typeof TQuizUser>;
@@ -68,3 +64,16 @@ export const TQuiz = z.object({
 export type Quiz = z.infer<typeof TQuiz>;
 
 export const TQuizzes = z.array(TQuiz);
+
+export const TPublicQuiz = z.object({
+  quizId: z.string(),
+  name: z.string(),
+  description: z.string(),
+  category: TQuizCategoryOptions,
+  questionsId: z.string(),
+  questionsCount: z.number(),
+});
+
+export type PublicQuiz = z.infer<typeof TPublicQuiz>;
+
+export const TPublicQuizzes = z.array(TPublicQuiz);

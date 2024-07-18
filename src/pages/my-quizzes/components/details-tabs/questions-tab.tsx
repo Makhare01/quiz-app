@@ -18,7 +18,7 @@ export const QuestionsTab = ({ questionsId }: Props) => {
 
   return (
     <Box>
-      <Typography variant="body1" fontWeight={700} mb={3}>
+      <Typography variant="body1" fontWeight={700} mb={1}>
         Questions list
       </Typography>
 

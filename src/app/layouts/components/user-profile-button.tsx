@@ -63,7 +63,7 @@ export const UserProfileButton = () => {
             color:
               location.pathname === paths.profile
                 ? "text.primary"
-                : "text.secondary",
+                : "text.disabled",
           }}
         >
           {authUser?.user.firstName.charAt(0)}

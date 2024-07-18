@@ -1,9 +1,17 @@
 import { qk } from "@api/query-keys";
 import { Question, TQuestion, updateQuestions } from "@api/questions";
 import { IconDraggableDots, IconPlus, IconTrashBin } from "@app/assets/icons";
+import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
 import { Select } from "@app/ui/select";
 import { TextField } from "@app/ui/texfield";
+import { ToastContent } from "@app/ui/toast";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "@hello-pangea/dnd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getFieldError } from "@lib/form";
 import {
@@ -12,18 +20,19 @@ import {
   FormControlLabel,
   IconButton,
   Switch,
+  Typography,
 } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { recordToOptions } from "@utils/options";
 import { quizQuestionTypesOptions } from "@utils/questions";
 import { useCallback } from "react";
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
+import {
+  createSearchParams,
+  generatePath,
+  useNavigate,
+} from "react-router-dom";
+import { toast } from "react-toastify";
 import { z } from "zod";
 import { AnswerController } from "./answer-controller";
 
@@ -60,7 +69,7 @@ export type AddQuestionsFormValues = z.infer<typeof AddQuestionsFormSchema>;
 
 const emptyQuestion: Question = {
   question: "",
-  type: "RADIO",
+  type: "TEXT",
   order: 0,
   isRequired: false,
   answers: [],
@@ -81,15 +90,22 @@ export const AddQuestionForm = ({
   questionsId,
   defaultQuestions,
 }: Props) => {
+  const navigate = useNavigate();
+
   const queryClient = useQueryClient();
-  const { control, watch, setValue, handleSubmit } =
-    useForm<AddQuestionsFormValues>({
-      defaultValues: {
-        questions:
-          defaultQuestions.length > 0 ? defaultQuestions : [emptyQuestion],
-      },
-      resolver: zodResolver(AddQuestionsFormSchema),
-    });
+  const {
+    control,
+    watch,
+    setValue,
+    handleSubmit,
+    formState: { isDirty },
+  } = useForm<AddQuestionsFormValues>({
+    defaultValues: {
+      questions:
+        defaultQuestions.length > 0 ? defaultQuestions : [emptyQuestion],
+    },
+    resolver: zodResolver(AddQuestionsFormSchema),
+  });
 
   const { fields, insert, remove, swap } = useFieldArray({
     control,
@@ -116,14 +132,35 @@ export const AddQuestionForm = ({
       <Box
         component="form"
         onSubmit={handleSubmit((values) => {
+          const orderedQuestions = values.questions.map((question, index) => ({
+            ...question,
+            order: index,
+          }));
           $updateQuestions.mutate(
-            { quizId, questionsId, ...values },
+            { quizId, questionsId, questions: orderedQuestions },
             {
               onSuccess: (question) => {
                 queryClient.invalidateQueries({
                   queryKey: qk.quiz.quizQuestion.toKeyWithArgs({
                     questionsId: question._id,
                   }),
+                });
+
+                toast.success(
+                  <ToastContent title="Updated">
+                    <Typography variant="body2">
+                      Questions updated successfully
+                    </Typography>
+                  </ToastContent>
+                );
+
+                navigate({
+                  pathname: generatePath(paths.myQuizDetails, {
+                    quizId,
+                  }),
+                  search: createSearchParams({
+                    tab: "questions",
+                  }).toString(),
                 });
               },
             }
@@ -290,7 +327,7 @@ export const AddQuestionForm = ({
             bottom: 0,
             color: "white",
           }}
-          disabled={$updateQuestions.isPending}
+          disabled={$updateQuestions.isPending || !isDirty}
           isLoading={$updateQuestions.isPending}
         >
           Save

@@ -6,7 +6,7 @@ import { Box, CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { match, P } from "ts-pattern";
-import { DeleteQuizButton, DetailsTabs } from "../components";
+import { DeleteQuizButton, DetailsTabs, QuizStatusButton } from "../components";
 
 export const MyQuizDetailsPage = () => {
   const navigate = useNavigate();
@@ -55,6 +55,11 @@ export const MyQuizDetailsPage = () => {
                   gap={2}
                   flex={1}
                 >
+                  <QuizStatusButton
+                    quizId={quiz._id}
+                    status={quiz.status}
+                    onChange={$quizDetails.refetch}
+                  />
                   <Button
                     variant="outlined"
                     color="success"

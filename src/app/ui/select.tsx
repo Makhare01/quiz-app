@@ -1,5 +1,6 @@
 import {
   Box,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select as MuiSelect,
@@ -15,10 +16,11 @@ export type SelectOption<T extends string = string> = {
 type Props = SelectProps & {
   options: Array<SelectOption>;
   itemAction?: (index?: number) => ReactNode;
+  helperText?: string;
 };
 
 export const Select = forwardRef<HTMLSelectElement, Props>(
-  ({ options, itemAction, label, ...props }, ref) => {
+  ({ options, itemAction, label, helperText, ...props }, ref) => {
     return (
       <Box width={1}>
         <InputLabel
@@ -98,6 +100,18 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
             </MenuItem>
           ))}
         </MuiSelect>
+        <FormHelperText
+          error={props.error}
+          sx={{
+            ml: 0.5,
+            fontWeight: 400,
+            fontSize: "12px",
+            lineHeight: "18px",
+            color: "text.disabled",
+          }}
+        >
+          {helperText}
+        </FormHelperText>
       </Box>
     );
   }
