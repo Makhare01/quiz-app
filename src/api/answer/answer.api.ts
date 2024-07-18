@@ -76,25 +76,31 @@ export const getCurrentQuestion = async ({
 
 type SaveAnswerInput = {
   answerId: string;
+  questionId: string;
+  quizId: string;
   answerType: AnswerTypes;
   answers: Array<string>;
-  questionId: string;
   order: number;
+  isLast: boolean;
 };
 
 export const saveAnswer = async ({
   answerId,
+  questionId,
+  quizId,
   answerType,
   answers,
-  questionId,
   order,
+  isLast,
 }: SaveAnswerInput) => {
   return await request("/api/answer/:answerId/save").post({
     body: {
+      questionId,
+      quizId,
       answerType,
       answers,
-      questionId,
       order,
+      isLast,
     },
     params: {
       answerId,

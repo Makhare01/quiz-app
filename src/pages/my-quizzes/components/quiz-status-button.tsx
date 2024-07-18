@@ -21,8 +21,7 @@ export const QuizStatusButton = ({ quizId, status, onChange }: Props) => {
     mutationFn: changeQuizStatus,
   });
 
-  const oppositeStatus: QuizStatus =
-    status === "IN_PROGRESS" ? "READY" : "IN_PROGRESS";
+  const oppositeStatus: QuizStatus = status === "DRAFT" ? "READY" : "DRAFT";
 
   return (
     <Box>

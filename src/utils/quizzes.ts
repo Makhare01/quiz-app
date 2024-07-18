@@ -100,6 +100,6 @@ export const quizCategoryOptions: Record<
 };
 
 export const quizStatusOptions: Record<QuizStatus, string> = {
-  IN_PROGRESS: "In progress",
+  DRAFT: "Draft",
   READY: "Ready",
 };

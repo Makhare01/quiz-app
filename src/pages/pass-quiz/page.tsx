@@ -89,6 +89,7 @@ export const PassQuizPage = () => {
                       }}
                       answerId={answer._id}
                       isLast={quiz.questionsCount === answer.answers.length + 1}
+                      quizId={quizId}
                     />
                   );
                 })

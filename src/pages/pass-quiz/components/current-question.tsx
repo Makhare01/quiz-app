@@ -21,6 +21,7 @@ export type QuestionAnswerFormValues = z.infer<typeof QuestionAnswerFormSchema>;
 type Props = {
   questionsId: string;
   lastQuestionId?: string;
+  quizId: string;
   progress: {
     current: number;
     total: number;
@@ -32,6 +33,7 @@ type Props = {
 export const CurrentQuestion = ({
   questionsId,
   lastQuestionId,
+  quizId,
   progress,
   answerId,
   isLast,
@@ -78,12 +80,14 @@ export const CurrentQuestion = ({
                 $saveAnswer.mutate(
                   {
                     answerId,
+                    quizId,
                     answers: values.answers.filter(
                       (answer) => answer !== "" && answer !== undefined
                     ),
                     answerType: question.type,
                     order: question.order,
                     questionId: question.questionId,
+                    isLast,
                   },
                   {
                     onSuccess: () => {

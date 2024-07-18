@@ -84,7 +84,10 @@ export const Table = ({
                   key={"column-" + index}
                   align={align}
                   width={width}
-                  sx={{ fontWeight: 700, minWidth: width }}
+                  sx={{
+                    fontWeight: 700,
+                    minWidth: width,
+                  }}
                   onClick={() => {
                     if (!setSort || !sortable) return;
 
