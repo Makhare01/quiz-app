@@ -1,7 +1,6 @@
 import { QuizUser } from "@api/quiz";
-import { Tabs } from "@app/ui/tabs";
+import { Tab, Tabs } from "@app/ui/tabs";
 import { Box } from "@mui/material";
-import { ReactNode } from "react";
 import { QuestionsTab } from "./questions-tab";
 import { UsersTab } from "./users-tab";
 
@@ -10,11 +9,7 @@ type TabTypes = "users" | "questions";
 const tabs: (
   questionsId: string,
   users: Array<QuizUser>
-) => Array<{
-  label: string;
-  value: TabTypes;
-  tabComponent: ReactNode;
-}> = (questionsId, users) => [
+) => Array<Tab<TabTypes>> = (questionsId, users) => [
   {
     label: "Users",
     value: "users",

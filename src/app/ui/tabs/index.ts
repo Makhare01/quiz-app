@@ -1,2 +1,2 @@
 export { TabPanel } from "./tab-panel";
-export { Tabs } from "./tabs";
+export { Tabs, type Tab } from "./tabs";
