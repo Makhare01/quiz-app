@@ -68,3 +68,16 @@ export const TQuiz = z.object({
 export type Quiz = z.infer<typeof TQuiz>;
 
 export const TQuizzes = z.array(TQuiz);
+
+export const TPublicQuiz = z.object({
+  quizId: z.string(),
+  name: z.string(),
+  description: z.string(),
+  category: TQuizCategoryOptions,
+  questionsId: z.string(),
+  questionsCount: z.number(),
+});
+
+export type PublicQuiz = z.infer<typeof TPublicQuiz>;
+
+export const TPublicQuizzes = z.array(TPublicQuiz);

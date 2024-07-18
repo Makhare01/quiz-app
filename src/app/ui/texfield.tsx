@@ -60,7 +60,7 @@ export const TextField = forwardRef<HTMLDivElement, TextFieldProps>(
             fontWeight: 400,
             fontSize: "12px",
             lineHeight: "18px",
-            color: "text.secondary",
+            color: "text.disabled",
           }}
         >
           {helperText}

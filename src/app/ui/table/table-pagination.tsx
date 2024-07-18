@@ -73,7 +73,7 @@ export const TablePagination = ({
       <Stack direction="row" gap={1} alignItems="center">
         <Typography
           variant="body2"
-          color="text.secondary"
+          color="text.disabled"
           sx={{ fontWeight: 500, textWrap: "nowrap" }}
         >
           Rows per page:
@@ -95,7 +95,7 @@ export const TablePagination = ({
           </Box>
           <Typography
             variant="body2"
-            color="text.secondary"
+            color="text.disabled"
             sx={{ fontWeight: 500, textWrap: "nowrap" }}
           >
             {currentMinPage}-{currentMaxPage} of {totalCount}
@@ -142,7 +142,7 @@ export const TablePagination = ({
                 <Typography
                   variant="body2"
                   fontWeight={500}
-                  color="text.secondary"
+                  color="text.disabled"
                 >
                   ...
                 </Typography>

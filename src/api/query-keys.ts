@@ -1,6 +1,7 @@
 import { buildModuleCacheKey } from "@lib/react-query-utils";
+import { GetCurrentQuestionInput, GetUserAnswerInput } from "./answer";
 import { GetQuizQuestionInput } from "./questions";
-import { GetQuizDetailsInput } from "./quiz";
+import { GetPublicQuizDetailsInput, GetQuizDetailsInput } from "./quiz";
 
 /**
  * Same list can be displayed with the standard page pagination in one place (useQuery)
@@ -23,8 +24,13 @@ export const qk = buildModuleCacheKey({
   },
   quiz: {
     details: (input: GetQuizDetailsInput) => [input],
+    publicQuizDetails: (input: GetPublicQuizDetailsInput) => [input],
     publicQuizzes: null,
     myQuizzes: null,
     quizQuestion: (input: GetQuizQuestionInput) => [input],
+  },
+  answer: {
+    getUserAnswer: (input: GetUserAnswerInput) => [input],
+    getCurrentQuestion: (input: GetCurrentQuestionInput) => [input],
   },
 });

@@ -30,7 +30,7 @@ const TAnswer = z.object({
 
 export const TQuestion = z.object({
   _id: z.string().optional(),
-  question: z.string().min(10),
+  question: z.string().min(1),
   type: TAnswerTypes,
   isRequired: z.boolean().optional(),
   order: z.number(),

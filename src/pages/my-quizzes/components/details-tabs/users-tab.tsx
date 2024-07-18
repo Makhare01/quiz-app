@@ -9,7 +9,7 @@ type Props = {
 export const UsersTab = ({ users }: Props) => {
   return (
     <Box>
-      <Typography variant="body1" fontWeight={700} mb={3}>
+      <Typography variant="body1" fontWeight={700} mb={1}>
         Users list
       </Typography>
 

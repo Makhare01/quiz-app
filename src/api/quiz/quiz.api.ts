@@ -1,6 +1,12 @@
 import { request } from "@lib/request";
 import { QuizFormValues } from "@pages/create-quiz/components";
-import { TQuiz, TQuizzes } from "./quiz.schema";
+import {
+  QuizStatus,
+  TPublicQuiz,
+  TPublicQuizzes,
+  TQuiz,
+  TQuizzes,
+} from "./quiz.schema";
 
 export const createQuiz = async (input: QuizFormValues) => {
   return await request("/api/quiz/create").post(
@@ -39,6 +45,25 @@ export const deleteQuiz = async ({ quizId }: DeleteQuizInput) => {
   });
 };
 
+type ChangeQuizStatusInput = {
+  quizId: string;
+  status: QuizStatus;
+};
+
+export const changeQuizStatus = async ({
+  quizId,
+  status,
+}: ChangeQuizStatusInput) => {
+  return await request("/api/my-quizzes/:quizId/change-status").put({
+    params: {
+      quizId,
+    },
+    body: {
+      status,
+    },
+  });
+};
+
 export type GetQuizDetailsInput = {
   quizId: string;
 };
@@ -55,7 +80,24 @@ export const getQuizDetails = async ({ quizId }: GetQuizDetailsInput) => {
 };
 
 export const getPublicQuizzes = async () => {
-  return await request("/api/quizzes").get({}, TQuizzes);
+  return await request("/api/quizzes").get({}, TPublicQuizzes);
+};
+
+export type GetPublicQuizDetailsInput = {
+  quizId: string;
+};
+
+export const getPublicQuizDetails = async ({
+  quizId,
+}: GetPublicQuizDetailsInput) => {
+  return await request("/api/quizzes/:quizId").get(
+    {
+      params: {
+        quizId,
+      },
+    },
+    TPublicQuiz
+  );
 };
 
 export const getMyQuizzes = async () => {

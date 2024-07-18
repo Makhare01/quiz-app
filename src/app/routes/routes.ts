@@ -8,6 +8,21 @@ export const authRoutes = [
     title: "Dashboard",
   }),
   createRoute({
+    path: paths.startQuiz,
+    factory: () => import("../../pages/start-quiz"),
+    title: "Start quiz",
+  }),
+  createRoute({
+    path: paths.passQuiz,
+    factory: () => import("../../pages/pass-quiz"),
+    title: "Pass the quiz",
+  }),
+  createRoute({
+    path: paths.quizResult,
+    factory: () => import("../../pages/result"),
+    title: "Quiz result",
+  }),
+  createRoute({
     path: paths.myQuizzes,
     factory: () => import("../../pages/my-quizzes"),
     title: "My quizzes",

@@ -4,6 +4,12 @@ import { IconDraggableDots, IconPlus, IconTrashBin } from "@app/assets/icons";
 import { Button } from "@app/ui/button";
 import { Select } from "@app/ui/select";
 import { TextField } from "@app/ui/texfield";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "@hello-pangea/dnd";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { getFieldError } from "@lib/form";
 import {
@@ -17,12 +23,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { recordToOptions } from "@utils/options";
 import { quizQuestionTypesOptions } from "@utils/questions";
 import { useCallback } from "react";
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { AnswerController } from "./answer-controller";
@@ -60,7 +60,7 @@ export type AddQuestionsFormValues = z.infer<typeof AddQuestionsFormSchema>;
 
 const emptyQuestion: Question = {
   question: "",
-  type: "RADIO",
+  type: "TEXT",
   order: 0,
   isRequired: false,
   answers: [],
@@ -116,8 +116,12 @@ export const AddQuestionForm = ({
       <Box
         component="form"
         onSubmit={handleSubmit((values) => {
+          const orderedQuestions = values.questions.map((question, index) => ({
+            ...question,
+            order: index,
+          }));
           $updateQuestions.mutate(
-            { quizId, questionsId, ...values },
+            { quizId, questionsId, questions: orderedQuestions },
             {
               onSuccess: (question) => {
                 queryClient.invalidateQueries({

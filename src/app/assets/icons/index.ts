@@ -1,4 +1,5 @@
 export { IconArrow } from "./arrow";
+export { IconCheck } from "./check";
 export { IconClose } from "./close";
 export { IconDraggableDots } from "./draggable-dots";
 export { IconPlus } from "./plus";

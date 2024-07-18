@@ -1,6 +1,6 @@
 import { qk } from "@api/query-keys";
 import { getPublicQuizzes } from "@api/quiz";
-import { QuizCard } from "@components/quiz-card";
+import { PublicQuizCard } from "@components/quiz-card";
 import { Box, CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { match, P } from "ts-pattern";
@@ -13,7 +13,7 @@ export const Dashboard = () => {
 
   return (
     <Box width={1} height={1} px={3} py={1}>
-      <Box py={2} border={1} borderColor="divider" mb={1}>
+      <Box py={2} border={1} borderColor="divider" mb={3}>
         Filters
       </Box>
       {match($publicQuizzes)
@@ -23,15 +23,9 @@ export const Dashboard = () => {
         ))
         .with({ isSuccess: true, data: P.select() }, (quizzes) => {
           return (
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="space-between"
-              gap={3}
-              flexWrap="wrap"
-            >
+            <Box display="flex" alignItems="center" gap={3} flexWrap="wrap">
               {quizzes.map((quiz) => (
-                <QuizCard key={quiz._id} {...quiz} />
+                <PublicQuizCard key={quiz.quizId} {...quiz} />
               ))}
             </Box>
           );
