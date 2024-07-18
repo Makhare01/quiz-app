@@ -12,6 +12,7 @@ export const PublicQuizCard = (quiz: PublicQuiz) => {
     <Box
       sx={{
         width: 250,
+        height: 130,
         bgcolor: "white",
         p: 3,
         border: 1,
@@ -29,6 +30,7 @@ export const PublicQuizCard = (quiz: PublicQuiz) => {
 
         ":hover": {
           backgroundPosition: "left",
+          boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
         },
       }}
       onClick={() => {
@@ -42,7 +44,7 @@ export const PublicQuizCard = (quiz: PublicQuiz) => {
       <Icon
         sx={{
           color: "divider",
-          fontSize: 60,
+          fontSize: 74,
           position: "absolute",
           right: 10,
           bottom: 0,

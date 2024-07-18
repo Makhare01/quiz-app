@@ -79,8 +79,31 @@ export const getQuizDetails = async ({ quizId }: GetQuizDetailsInput) => {
   );
 };
 
-export const getPublicQuizzes = async () => {
-  return await request("/api/quizzes").get({}, TPublicQuizzes);
+export type GetPublicQuizzesInput = {
+  category?: string;
+  search?: string;
+};
+
+export const getPublicQuizzes = async ({
+  category,
+  search,
+}: GetPublicQuizzesInput) => {
+  const query = new URLSearchParams();
+
+  if (category) {
+    query.set("category", category);
+  }
+
+  if (search) {
+    query.set("search", search);
+  }
+
+  return await request("/api/quizzes").get(
+    {
+      query,
+    },
+    TPublicQuizzes
+  );
 };
 
 export type GetPublicQuizDetailsInput = {
