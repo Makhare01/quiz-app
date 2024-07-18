@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { useSearchParams } from "react-router-dom";
 import { TabPanel } from "./tab-panel";
 
-type Tab<T> = { label: string; value: T; tabComponent: ReactNode };
+export type Tab<T> = { label: string; value: T; tabComponent: ReactNode };
 
 type Props<T> = {
   tabs: Array<Tab<T>>;
