@@ -87,6 +87,7 @@ const TInProgressQuiz = z.intersection(
     answerId: z.string(),
     quizName: z.string().optional(),
     category: TQuizCategoryOptions,
+    isFavorite: z.boolean().optional(),
   })
 );
 

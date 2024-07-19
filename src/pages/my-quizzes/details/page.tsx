@@ -2,6 +2,7 @@ import { qk } from "@api/query-keys";
 import { getQuizDetails } from "@api/quiz";
 import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
+import { StarButton } from "@components/quiz-card/star-button";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
@@ -35,9 +36,18 @@ export const MyQuizDetailsPage = () => {
                 mb={5}
               >
                 <Box>
-                  <Typography variant="h1" fontWeight={700}>
-                    {quiz.name}
-                  </Typography>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                    <Typography variant="h1" fontWeight={700}>
+                      {quiz.name}
+                    </Typography>
+
+                    <StarButton
+                      quizId={quiz._id}
+                      isFavorite={quiz.isFavorite}
+                      onUpdate={$quizDetails.refetch}
+                      isBlocked
+                    />
+                  </Box>
 
                   <Typography
                     variant="body1"

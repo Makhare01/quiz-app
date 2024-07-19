@@ -4,19 +4,19 @@ import { IconStar, IconStarFilled } from "@app/assets/icons";
 import { IconButton } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const starIconButtonStyle = {
-  position: "absolute",
-  top: 10,
-  right: 10,
-};
-
 type Props = {
   quizId: string;
   isFavorite?: boolean;
+  isBlocked?: boolean;
   onUpdate?: () => void;
 };
 
-export const StarButton = ({ quizId, isFavorite, onUpdate }: Props) => {
+export const StarButton = ({
+  quizId,
+  isFavorite,
+  isBlocked,
+  onUpdate,
+}: Props) => {
   const queryClient = useQueryClient();
 
   const $updateFavorites = useMutation({
@@ -44,7 +44,14 @@ export const StarButton = ({ quizId, isFavorite, onUpdate }: Props) => {
         event.stopPropagation();
         onChange();
       }}
-      sx={{ p: 0, ...starIconButtonStyle }}
+      sx={{
+        p: 0,
+        ...(!isBlocked && {
+          position: "absolute",
+          top: 10,
+          right: 10,
+        }),
+      }}
     >
       {isFavorite ? (
         <IconStarFilled sx={{ color: "warning.main" }} />
