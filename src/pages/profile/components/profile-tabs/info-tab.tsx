@@ -15,7 +15,7 @@ const FormSchema = z.object({
   email: z.string().email(),
 });
 
-type FormValues = z.infer<typeof FormSchema>;
+export type UpdateUserInfoFormValues = z.infer<typeof FormSchema>;
 
 export const InfoTab = () => {
   const { refetchRefreshToken } = useAuth();
@@ -26,7 +26,7 @@ export const InfoTab = () => {
     handleSubmit,
     formState: { isDirty },
     reset,
-  } = useForm<FormValues>({
+  } = useForm<UpdateUserInfoFormValues>({
     defaultValues: {
       firstName: authUser?.user.firstName ?? "",
       lastName: authUser?.user.lastName ?? "",
@@ -49,18 +49,12 @@ export const InfoTab = () => {
         gap: 2,
       }}
       onSubmit={handleSubmit((values) => {
-        $credentials.mutate(
-          {
-            userId: authUser?.user.userId ?? "",
-            ...values,
+        $credentials.mutate(values, {
+          onSuccess: (user) => {
+            refetchRefreshToken();
+            reset(user);
           },
-          {
-            onSuccess: (user) => {
-              refetchRefreshToken();
-              reset(user);
-            },
-          }
-        );
+        });
       })}
     >
       <Controller

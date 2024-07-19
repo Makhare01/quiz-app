@@ -1,6 +1,6 @@
 import { Tab, Tabs } from "@app/ui/tabs";
-import { Box, Typography } from "@mui/material";
-import { OwnQuizzes, QuizzesInProgress } from "./components";
+import { Box } from "@mui/material";
+import { FavoriteQuizzes, OwnQuizzes, QuizzesInProgress } from "./components";
 
 type TabTypes = "my-quizzes" | "in-progress" | "favorites";
 
@@ -18,11 +18,7 @@ const tabs: Array<Tab<TabTypes>> = [
   {
     label: "Favorites",
     value: "favorites",
-    tabComponent: (
-      <Box px={3} py={1} borderBottom={1} borderColor="divider" mb={5}>
-        <Typography variant="h3">Favorite Quizzes</Typography>
-      </Box>
-    ),
+    tabComponent: <FavoriteQuizzes />,
   },
 ];
 

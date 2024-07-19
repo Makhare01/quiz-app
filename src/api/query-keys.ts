@@ -33,6 +33,7 @@ export const qk = buildModuleCacheKey({
     myQuizzes: null,
     quizQuestion: (input: GetQuizQuestionInput) => [input],
     inProgress: null,
+    favoriteQuizzes: null,
   },
   answer: {
     getUserAnswer: (input: GetUserAnswerInput) => [input],

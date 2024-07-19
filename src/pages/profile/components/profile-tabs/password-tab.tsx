@@ -1,5 +1,5 @@
 import { updateUserPassword } from "@api/user";
-import { useAuth, useAuthUser } from "@app/auth";
+import { useAuth } from "@app/auth";
 import { Button } from "@app/ui/button";
 import { TextField } from "@app/ui/texfield";
 import { ToastContent } from "@app/ui/toast";
@@ -29,7 +29,6 @@ export type UpdatePasswordFormValues = z.infer<typeof FormSchema>;
 
 export const PasswordTab = () => {
   const { refetchRefreshToken } = useAuth();
-  const authUser = useAuthUser();
 
   const { control, handleSubmit, watch, reset } =
     useForm<UpdatePasswordFormValues>({
@@ -61,23 +60,20 @@ export const PasswordTab = () => {
         gap: 2,
       }}
       onSubmit={handleSubmit((values) => {
-        $updatePassword.mutate(
-          { userId: authUser?.user.userId ?? "", ...values },
-          {
-            onSuccess: () => {
-              refetchRefreshToken();
-              reset();
+        $updatePassword.mutate(values, {
+          onSuccess: () => {
+            refetchRefreshToken();
+            reset();
 
-              toast.success(
-                <ToastContent title="Success">
-                  <Typography variant="body2">
-                    Password successfully updated
-                  </Typography>
-                </ToastContent>
-              );
-            },
-          }
-        );
+            toast.success(
+              <ToastContent title="Success">
+                <Typography variant="body2">
+                  Password successfully updated
+                </Typography>
+              </ToastContent>
+            );
+          },
+        });
       })}
     >
       <Controller

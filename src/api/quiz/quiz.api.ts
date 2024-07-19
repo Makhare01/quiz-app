@@ -134,3 +134,7 @@ export const getQuizzesInProgress = async () => {
     TInProgressQuizzes
   );
 };
+
+export const getUserFavoriteQuizzes = async () => {
+  return await request("/api/my-quizzes/favorites").get({}, TPublicQuizzes);
+};

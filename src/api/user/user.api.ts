@@ -1,8 +1,11 @@
-import { TUser, User } from "@api/auth";
+import { TUser } from "@api/auth";
 import { request } from "@lib/request";
-import { UpdatePasswordFormValues } from "@pages/profile/components/profile-tabs";
+import {
+  UpdatePasswordFormValues,
+  UpdateUserInfoFormValues,
+} from "@pages/profile/components/profile-tabs";
 
-export const updateUser = async (input: User) => {
+export const updateUser = async (input: UpdateUserInfoFormValues) => {
   return await request("/api/user/credentials").patch(
     {
       body: input,
@@ -11,10 +14,22 @@ export const updateUser = async (input: User) => {
   );
 };
 
-export const updateUserPassword = async (
-  input: UpdatePasswordFormValues & { userId: string }
-) => {
+export const updateUserPassword = async (input: UpdatePasswordFormValues) => {
   return await request("/api/user/change-password").patch({
     body: input,
+  });
+};
+
+type UpdateUserFavoriteQuizzesInput = {
+  quizId: string;
+};
+
+export const updateUserFavoriteQuizzes = async ({
+  quizId,
+}: UpdateUserFavoriteQuizzesInput) => {
+  return await request("/api/user/favorite-quizzes").put({
+    body: {
+      quizId,
+    },
   });
 };
