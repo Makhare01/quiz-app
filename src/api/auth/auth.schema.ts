@@ -5,6 +5,7 @@ export const TUser = z.object({
   firstName: z.string(),
   lastName: z.string(),
   email: z.string(),
+  favoriteQuizzes: z.array(z.string()),
 });
 
 export type User = z.infer<typeof TUser>;

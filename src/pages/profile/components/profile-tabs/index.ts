@@ -1,2 +1,3 @@
+export * from "./info-tab";
 export * from "./password-tab";
-export { ProfileTabs } from "./profile-tabs";
+export * from "./profile-tabs";

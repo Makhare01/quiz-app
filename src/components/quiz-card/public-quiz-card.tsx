@@ -3,8 +3,14 @@ import { paths } from "@app/routes";
 import { Box, Typography } from "@mui/material";
 import { quizCategoryOptions } from "@utils/quizzes";
 import { generatePath, useNavigate } from "react-router-dom";
+import { StarButton } from "./star-button";
 
-export const PublicQuizCard = (quiz: PublicQuiz) => {
+type Props = {
+  quiz: PublicQuiz;
+  onFavoriteChange: () => void;
+};
+
+export const PublicQuizCard = ({ quiz, onFavoriteChange }: Props) => {
   const navigate = useNavigate();
   const { Icon, color } = quizCategoryOptions[quiz.category];
 
@@ -41,6 +47,11 @@ export const PublicQuizCard = (quiz: PublicQuiz) => {
         );
       }}
     >
+      <StarButton
+        quizId={quiz.quizId}
+        isFavorite={quiz.isFavorite}
+        onUpdate={onFavoriteChange}
+      />
       <Icon
         sx={{
           color: "divider",

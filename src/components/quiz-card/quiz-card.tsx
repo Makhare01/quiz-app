@@ -8,6 +8,7 @@ import {
 } from "@utils/quizzes";
 import { format } from "date-fns";
 import { generatePath, useNavigate } from "react-router-dom";
+import { StarButton } from "./star-button";
 
 const DetailsItem = ({
   label,
@@ -32,16 +33,25 @@ const DetailsItem = ({
   );
 };
 
+type Props = {
+  quiz: Quiz;
+  onFavoriteChange: () => void;
+};
+
 export const QuizCard = ({
-  _id: quizId,
-  name,
-  questionsCount,
-  users,
-  category,
-  visibility,
-  createdAt,
-  status,
-}: Quiz) => {
+  quiz: {
+    _id: quizId,
+    name,
+    questionsCount,
+    users,
+    category,
+    visibility,
+    createdAt,
+    status,
+    isFavorite,
+  },
+  onFavoriteChange,
+}: Props) => {
   const navigate = useNavigate();
 
   const { label, Icon, color } = quizCategoryOptions[category];
@@ -57,6 +67,7 @@ export const QuizCard = ({
         borderRadius: 1,
         zIndex: 10,
         cursor: "pointer",
+        position: "relative",
       }}
       onClick={() => {
         navigate(
@@ -66,6 +77,12 @@ export const QuizCard = ({
         );
       }}
     >
+      <StarButton
+        quizId={quizId}
+        isFavorite={isFavorite}
+        onUpdate={onFavoriteChange}
+      />
+
       <Box display="flex" gap={1} alignItems="center" mb={2}>
         <Icon sx={{ color: color, fontSize: 32 }} />
 
@@ -74,16 +91,6 @@ export const QuizCard = ({
       <Typography variant="h4" fontWeight={700} mb={1}>
         {name}
       </Typography>
-
-      {/* <Typography
-        variant="h1"
-        color="#848C97"
-        fontSize={84}
-        fontWeight={700}
-        my={3}
-      >
-        {users.length}%
-      </Typography> */}
 
       <Stack spacing={1} mt={3}>
         <DetailsItem

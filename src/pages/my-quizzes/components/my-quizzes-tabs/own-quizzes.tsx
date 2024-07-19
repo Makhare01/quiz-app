@@ -26,7 +26,11 @@ export const OwnQuizzes = () => {
           return (
             <Box display="flex" alignItems="center" gap={3} flexWrap="wrap">
               {quizzes.map((quiz) => (
-                <QuizCard key={quiz._id} {...quiz} />
+                <QuizCard
+                  key={quiz._id}
+                  quiz={quiz}
+                  onFavoriteChange={$myQuizzes.refetch}
+                />
               ))}
             </Box>
           );

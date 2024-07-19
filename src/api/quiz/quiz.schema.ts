@@ -1,3 +1,4 @@
+import { TUserAnswer } from "@api/answer";
 import { z } from "zod";
 
 export const TVisibilityOptions = z.union([
@@ -59,6 +60,7 @@ export const TQuiz = z.object({
   status: TQuizStatus,
   createdAt: z.string(),
   users: z.array(TQuizUser),
+  isFavorite: z.boolean().optional(),
 });
 
 export type Quiz = z.infer<typeof TQuiz>;
@@ -72,8 +74,23 @@ export const TPublicQuiz = z.object({
   category: TQuizCategoryOptions,
   questionsId: z.string(),
   questionsCount: z.number(),
+  isFavorite: z.boolean().optional(),
 });
 
 export type PublicQuiz = z.infer<typeof TPublicQuiz>;
 
 export const TPublicQuizzes = z.array(TPublicQuiz);
+
+const TInProgressQuiz = z.intersection(
+  TUserAnswer,
+  z.object({
+    answerId: z.string(),
+    quizName: z.string().optional(),
+    category: TQuizCategoryOptions,
+    isFavorite: z.boolean().optional(),
+  })
+);
+
+export const TInProgressQuizzes = z.array(TInProgressQuiz);
+
+export type InProgressQuiz = z.infer<typeof TInProgressQuiz>;

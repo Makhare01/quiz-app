@@ -5,5 +5,6 @@ export { IconDraggableDots } from "./draggable-dots";
 export { IconPlus } from "./plus";
 export { IconQuiz } from "./quiz";
 export * from "./quiz-categories";
+export { IconStar, IconStarFilled } from "./star";
 export { IconTrashBin } from "./trash-bin";
 export { IconUser } from "./user";

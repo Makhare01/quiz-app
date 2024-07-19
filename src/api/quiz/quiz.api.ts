@@ -2,6 +2,7 @@ import { request } from "@lib/request";
 import { QuizFormValues } from "@pages/create-quiz/components";
 import {
   QuizStatus,
+  TInProgressQuizzes,
   TPublicQuiz,
   TPublicQuizzes,
   TQuiz,
@@ -125,4 +126,15 @@ export const getPublicQuizDetails = async ({
 
 export const getMyQuizzes = async () => {
   return await request("/api/my-quizzes").get({}, TQuizzes);
+};
+
+export const getQuizzesInProgress = async () => {
+  return await request("/api/my-quizzes/in-progress").get(
+    {},
+    TInProgressQuizzes
+  );
+};
+
+export const getUserFavoriteQuizzes = async () => {
+  return await request("/api/my-quizzes/favorites").get({}, TPublicQuizzes);
 };

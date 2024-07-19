@@ -1,7 +1,8 @@
 import { Question } from "@api/questions";
 import { DatePicker } from "@app/ui/date-picker";
 import { TextField } from "@app/ui/texfield";
-import { Control, UseFormSetValue } from "react-hook-form";
+import { getFieldError } from "@lib/form";
+import { Control, Controller, UseFormSetValue } from "react-hook-form";
 import { AddQuestionsFormValues } from "./add-question-form";
 import { CheckboxAnswerController } from "./checkbox-answer-controller";
 import { DropdownAnswerController } from "./dropdown-answer-controller";
@@ -41,7 +42,24 @@ export const AnswerController = ({
           />
         );
       case "DATE":
-        return <DatePicker disabled label="Answer" />;
+        return (
+          <Controller
+            control={control}
+            name={`questions.${index}.answers.0.answer`}
+            render={({ field, fieldState: { error } }) => (
+              <DatePicker
+                {...field}
+                value={new Date(field.value)}
+                onChange={(value) => {
+                  field.onChange(value?.toString());
+                  setValue(`questions.${index}.answers.0.isCorrect`, true);
+                }}
+                label="Answer"
+                {...getFieldError(error)}
+              />
+            )}
+          />
+        );
       case "RADIO":
         return (
           <RadioAnswerController

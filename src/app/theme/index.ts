@@ -27,6 +27,9 @@ export const theme = createTheme({
       disabled: "#757575",
       secondary: "#191D63",
     },
+    warning: {
+      main: "#FFBE00",
+    },
   },
 
   typography: {
