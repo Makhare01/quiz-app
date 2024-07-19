@@ -23,7 +23,6 @@ const TAnswer = z.object({
 
 export const TUserAnswer = z.object({
   _id: z.string(),
-  quizId: z.string(),
   user: z.object({
     userId: z.string().optional(),
     username: z.string(),
