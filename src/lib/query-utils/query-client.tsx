@@ -41,12 +41,10 @@ export const useQueryClientInstance = ({
   return useConst(() => {
     return new QueryClient({
       queryCache: new QueryCache({
-        onError: (error, query) => {
+        onError: (error) => {
           const requestError = error as RequestError;
 
-          if (!query.meta?.disableError) {
-            handleError(requestError.type, requestError.message);
-          }
+          handleError(requestError.type, requestError.message);
         },
       }),
       mutationCache: new MutationCache({

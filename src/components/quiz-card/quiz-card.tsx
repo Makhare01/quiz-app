@@ -75,6 +75,16 @@ export const QuizCard = ({
         {name}
       </Typography>
 
+      {/* <Typography
+        variant="h1"
+        color="#848C97"
+        fontSize={84}
+        fontWeight={700}
+        my={3}
+      >
+        {users.length}%
+      </Typography> */}
+
       <Stack spacing={1} mt={3}>
         <DetailsItem
           label="Visibility"

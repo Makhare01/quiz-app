@@ -1,14 +1,18 @@
+import { startQuiz } from "@api/answer";
 import { qk } from "@api/query-keys";
 import { getPublicQuizDetails } from "@api/quiz";
+import { useAuthUser } from "@app/auth";
+import { paths } from "@app/routes";
+import { Button } from "@app/ui/button";
 import { BackCloseButton } from "@components/back-close-button";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { quizCategoryOptions } from "@utils/quizzes";
-import { useNavigate, useParams } from "react-router-dom";
+import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { match, P } from "ts-pattern";
-import { StartQuizButton } from "./components";
 
 export const StartQuizPage = () => {
+  const authUser = useAuthUser();
   const navigate = useNavigate();
 
   const { quizId } = useParams() as { quizId: string };
@@ -16,6 +20,10 @@ export const StartQuizPage = () => {
   const $publicQuizDetails = useQuery({
     queryFn: () => getPublicQuizDetails({ quizId }),
     queryKey: qk.quiz.publicQuizDetails.toKeyWithArgs({ quizId }),
+  });
+
+  const $startQuiz = useMutation({
+    mutationFn: startQuiz,
   });
 
   return (
@@ -64,10 +72,45 @@ export const StartQuizPage = () => {
                 <BackCloseButton onClick={() => navigate(-1)} />
               </Box>
 
-              <StartQuizButton
-                quizId={quiz.quizId}
-                questionsId={quiz.questionsId}
-              />
+              <Box
+                flex={1}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Button
+                  variant="outlined"
+                  sx={{ width: 300, height: 70 }}
+                  onClick={() => {
+                    if (authUser) {
+                      const { user } = authUser;
+                      $startQuiz.mutate(
+                        {
+                          quizId: quiz.quizId,
+                          userId: user.userId,
+                          questionsId: quiz.questionsId,
+                          email: user.email,
+                          username: `${user.firstName} ${user.lastName}`,
+                        },
+                        {
+                          onSuccess: (answer) => {
+                            navigate(
+                              generatePath(paths.passQuiz, {
+                                quizId: quiz.quizId,
+                                answerId: answer.answerId,
+                              })
+                            );
+                          },
+                        }
+                      );
+                    }
+                  }}
+                  disabled={$startQuiz.isPending}
+                  isLoading={$startQuiz.isPending}
+                >
+                  START
+                </Button>
+              </Box>
             </Box>
           );
         })

@@ -15,7 +15,7 @@ export const LinearProgress = ({ label, ...props }: Props) => {
   const theme = useTheme();
   return (
     <Box sx={{ display: "flex", alignItems: "center", width: 1 }}>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", mr: 1 }}>
         <MuiLinearProgress
           variant="determinate"
           {...props}
@@ -33,7 +33,7 @@ export const LinearProgress = ({ label, ...props }: Props) => {
           }}
         />
       </Box>
-      {label && <Box sx={{ minWidth: 35, ml: 2 }}>{label}</Box>}
+      <Box sx={{ minWidth: 35, ml: 2 }}>{label}</Box>
     </Box>
   );
 };

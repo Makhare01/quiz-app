@@ -34,31 +34,15 @@ export const startQuiz = async ({
 };
 
 export type GetUserAnswerInput = {
-  answerId?: string;
-  answersUser?: {
-    userId: string;
-    questionsId: string;
-  };
+  answerId: string;
 };
 
-export const getUserAnswers = async ({
-  answerId,
-  answersUser,
-}: GetUserAnswerInput) => {
-  const query = new URLSearchParams();
-
-  if (answerId) {
-    query.set("answerId", answerId);
-  }
-
-  if (answersUser) {
-    query.set("userId", answersUser.userId);
-    query.set("questionsId", answersUser.questionsId);
-  }
-
-  return await request("/api/answer/details").get(
+export const getUserAnswers = async ({ answerId }: GetUserAnswerInput) => {
+  return await request("/api/answer/:answerId").get(
     {
-      query,
+      params: {
+        answerId,
+      },
     },
     TUserAnswer
   );
