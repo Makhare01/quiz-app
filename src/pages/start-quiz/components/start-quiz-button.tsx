@@ -37,7 +37,11 @@ export const StartQuizButton = ({ quizId, questionsId }: Props) => {
 
   const completedPercent =
     userAnswers &&
-    (userAnswers.answers.length / userAnswers.questionsCount) * 100;
+    Number(
+      ((userAnswers.answers.length / userAnswers.questionsCount) * 100).toFixed(
+        0
+      )
+    );
 
   return (
     <Box flex={1} display="flex" alignItems="center" justifyContent="center">

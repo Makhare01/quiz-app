@@ -5,12 +5,14 @@ import { LinearProgress } from "@app/ui/linear-progress";
 import { Box, Typography } from "@mui/material";
 import { quizCategoryOptions } from "@utils/quizzes";
 import { generatePath, useNavigate } from "react-router-dom";
+import { StarButton } from "./star-button";
 
 type Props = {
   quiz: InProgressQuiz;
+  onFavoriteChange: () => void;
 };
 
-export const InProgressQuizCard = ({ quiz }: Props) => {
+export const InProgressQuizCard = ({ quiz, onFavoriteChange }: Props) => {
   const navigate = useNavigate();
 
   const { label, Icon, color } = quizCategoryOptions[quiz.category];
@@ -30,8 +32,15 @@ export const InProgressQuizCard = ({ quiz }: Props) => {
         border: 1,
         borderColor: color,
         borderRadius: 1,
+        position: "relative",
       }}
     >
+      <StarButton
+        quizId={quiz.quizId}
+        isFavorite={quiz.isFavorite}
+        onUpdate={onFavoriteChange}
+      />
+
       <Box display="flex" gap={1} alignItems="center" mb={2}>
         <Icon sx={{ color: color, fontSize: 32 }} />
 
@@ -56,7 +65,7 @@ export const InProgressQuizCard = ({ quiz }: Props) => {
       <Button
         variant="outlined"
         fullWidth
-        sx={{ mt: 2 }}
+        sx={{ mt: 4 }}
         onClick={() => {
           // In this case quiz._is is same as answerId
           if (isFinished) {

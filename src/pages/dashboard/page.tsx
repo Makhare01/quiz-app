@@ -102,7 +102,11 @@ export const Dashboard = () => {
           return (
             <Box display="flex" alignItems="center" gap={3} flexWrap="wrap">
               {quizzes.map((quiz) => (
-                <PublicQuizCard key={quiz.quizId} {...quiz} />
+                <PublicQuizCard
+                  key={quiz.quizId}
+                  quiz={quiz}
+                  onFavoriteChange={$publicQuizzes.refetch}
+                />
               ))}
             </Box>
           );

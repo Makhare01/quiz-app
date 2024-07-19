@@ -77,7 +77,11 @@ export const QuizzesInProgress = () => {
                     >
                       {inProgressQuizzes.map((quiz) => {
                         return (
-                          <InProgressQuizCard key={quiz._id} quiz={quiz} />
+                          <InProgressQuizCard
+                            key={quiz._id}
+                            quiz={quiz}
+                            onFavoriteChange={$inProgressQuizzes.refetch}
+                          />
                         );
                       })}
                     </Box>
@@ -123,7 +127,11 @@ export const QuizzesInProgress = () => {
                     >
                       {finishedQuizzes.map((quiz) => {
                         return (
-                          <InProgressQuizCard key={quiz._id} quiz={quiz} />
+                          <InProgressQuizCard
+                            key={quiz._id}
+                            quiz={quiz}
+                            onFavoriteChange={$inProgressQuizzes.refetch}
+                          />
                         );
                       })}
                     </Box>
