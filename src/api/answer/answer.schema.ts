@@ -13,16 +13,22 @@ export const TQuestionAnswer = z.object({
 export type QuestionAnswer = z.infer<typeof TQuestionAnswer>;
 
 const TAnswer = z.object({
+  _id: z.string(),
   questionId: z.string(),
+  question: z.string(),
+  answerType: TAnswerTypes,
   order: z.number(),
   questionAnswer: TQuestionAnswer,
 });
 
 export const TUserAnswer = z.object({
   _id: z.string(),
-  userId: z.string().optional(),
-  email: z.string(),
-  username: z.string(),
+  user: z.object({
+    userId: z.string().optional(),
+    username: z.string(),
+    email: z.string(),
+  }),
+  questionsCount: z.number(),
   questionsId: z.string(),
   answers: z.array(TAnswer),
 });
