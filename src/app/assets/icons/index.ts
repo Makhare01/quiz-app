@@ -2,6 +2,7 @@ export { IconArrow } from "./arrow";
 export { IconCheck } from "./check";
 export { IconClose } from "./close";
 export { IconDraggableDots } from "./draggable-dots";
+export { IconLink } from "./link";
 export { IconPlus } from "./plus";
 export { IconQuiz } from "./quiz";
 export * from "./quiz-categories";

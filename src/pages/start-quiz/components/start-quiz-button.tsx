@@ -22,10 +22,8 @@ export const StartQuizButton = ({ quizId, questionsId }: Props) => {
   });
 
   const args = {
-    answersUser: {
-      userId: authUser?.user.userId ?? "",
-      questionsId,
-    },
+    email: authUser?.user.userId ?? "",
+    questionsId,
   };
 
   const { data: userAnswers } = useQuery({
@@ -63,8 +61,8 @@ export const StartQuizButton = ({ quizId, questionsId }: Props) => {
             $startQuiz.mutate(
               {
                 quizId,
-                userId: user.userId,
                 questionsId,
+                userId: user.userId,
                 email: user.email,
                 username: `${user.firstName} ${user.lastName}`,
               },

@@ -1,5 +1,6 @@
 import { Quiz } from "@api/quiz";
 import { paths } from "@app/routes";
+import { CopyText } from "@app/ui/copy-text";
 import { Box, Stack, Typography } from "@mui/material";
 import {
   quizCategoryOptions,
@@ -88,9 +89,28 @@ export const QuizCard = ({
 
         <Typography variant="h4">{label}</Typography>
       </Box>
-      <Typography variant="h4" fontWeight={700} mb={1}>
-        {name}
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          mb: 1,
+          gap: 1,
+        }}
+      >
+        <Typography variant="h4" fontWeight={700}>
+          {name}
+        </Typography>
+
+        {visibility === "LINK" && (
+          <CopyText
+            text={`${location.host}${generatePath(paths.linkedQuiz, {
+              quizId,
+            })}`}
+            copyText="Copy quiz link"
+            iconSx={{ fontSize: 18 }}
+          />
+        )}
+      </Box>
 
       <Stack spacing={1} mt={3}>
         <DetailsItem

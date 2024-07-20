@@ -2,6 +2,7 @@ import { qk } from "@api/query-keys";
 import { getQuizDetails } from "@api/quiz";
 import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
+import { CopyText } from "@app/ui/copy-text";
 import { StarButton } from "@components/quiz-card/star-button";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -47,6 +48,18 @@ export const MyQuizDetailsPage = () => {
                       onUpdate={$quizDetails.refetch}
                       isBlocked
                     />
+
+                    {quiz.visibility === "LINK" && (
+                      <CopyText
+                        text={`${location.host}${generatePath(
+                          paths.linkedQuiz,
+                          {
+                            quizId: quiz._id,
+                          }
+                        )}`}
+                        copyText="Copy quiz link"
+                      />
+                    )}
                   </Box>
 
                   <Typography
