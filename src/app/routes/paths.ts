@@ -11,6 +11,8 @@ export const paths = {
   addQuizQuestions: "/my-quizzes/:quizId/:questionsId/add-questions",
   profile: "/profile",
   createQuiz: "/create-quiz",
+
+  linkedQuiz: "/linked-quiz/:quizId",
 } as const;
 
 export type PathKey = keyof typeof paths;

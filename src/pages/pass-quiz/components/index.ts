@@ -1,2 +1,2 @@
 export { CurrentQuestion } from "./current-question";
-export { PasswdQuizView } from "./passed-quiz-view";
+export { PassedQuizView } from "./passed-quiz-view";

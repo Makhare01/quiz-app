@@ -109,16 +109,25 @@ export const getPublicQuizzes = async ({
 
 export type GetPublicQuizDetailsInput = {
   quizId: string;
+  userId?: string;
 };
 
 export const getPublicQuizDetails = async ({
   quizId,
+  userId,
 }: GetPublicQuizDetailsInput) => {
+  const query = new URLSearchParams();
+
+  if (userId) {
+    query.set("userId", userId);
+  }
+
   return await request("/api/quizzes/:quizId").get(
     {
       params: {
         quizId,
       },
+      query,
     },
     TPublicQuiz
   );

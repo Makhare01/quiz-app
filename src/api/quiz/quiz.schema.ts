@@ -39,7 +39,7 @@ const TQuizStatus = z.union([z.literal("DRAFT"), z.literal("READY")]);
 export type QuizStatus = z.infer<typeof TQuizStatus>;
 
 const TQuizUser = z.object({
-  userId: z.string(),
+  userId: z.string().optional(),
   email: z.string().email(),
   username: z.string(),
   answerId: z.string(),

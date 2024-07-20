@@ -1,19 +1,32 @@
 import { getUserAnswers } from "@api/answer";
 import { qk } from "@api/query-keys";
+import { useAuthUser } from "@app/auth";
 import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { match, P } from "ts-pattern";
 
 export const ResultPage = () => {
+  const authUser = useAuthUser();
+  const [searchParams] = useSearchParams();
+
+  const guestUserEmail = searchParams.get("email");
+
   const { answerId } = useParams() as {
     answerId: string;
   };
 
+  const email = guestUserEmail ?? authUser?.user.email;
+
+  const args = {
+    answerId,
+    email: email ?? "",
+  };
+
   const $userAnswers = useQuery({
-    queryKey: qk.answer.getUserAnswer.toKeyWithArgs({ answerId }),
-    queryFn: () => getUserAnswers({ answerId }),
+    queryKey: qk.answer.getUserAnswer.toKeyWithArgs(args),
+    queryFn: () => getUserAnswers(args),
   });
 
   return (
