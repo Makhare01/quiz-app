@@ -1,9 +1,18 @@
 import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
 import { Box, Typography } from "@mui/material";
-import { generatePath, useNavigate, useParams } from "react-router-dom";
+import {
+  createSearchParams,
+  generatePath,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
-export const PasswdQuizView = () => {
+type Props = {
+  userEmail: string;
+};
+
+export const PassedQuizView = ({ userEmail }: Props) => {
   const navigate = useNavigate();
 
   const { answerId } = useParams() as { answerId: string };
@@ -43,11 +52,14 @@ export const PasswdQuizView = () => {
         <Button
           variant="outlined"
           onClick={() => {
-            navigate(
-              generatePath(paths.quizResult, {
+            navigate({
+              pathname: generatePath(paths.quizResult, {
                 answerId,
-              })
-            );
+              }),
+              search: createSearchParams({
+                email: userEmail,
+              }).toString(),
+            });
           }}
           sx={{
             height: 60,

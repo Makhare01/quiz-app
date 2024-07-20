@@ -1,5 +1,6 @@
 import { qk } from "@api/query-keys";
 import { getPublicQuizDetails } from "@api/quiz";
+import { useAuthUser } from "@app/auth";
 import { BackCloseButton } from "@components/back-close-button";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -9,13 +10,19 @@ import { match, P } from "ts-pattern";
 import { StartQuizButton } from "./components";
 
 export const StartQuizPage = () => {
+  const authUser = useAuthUser();
+
   const navigate = useNavigate();
 
   const { quizId } = useParams() as { quizId: string };
 
   const $publicQuizDetails = useQuery({
-    queryFn: () => getPublicQuizDetails({ quizId }),
-    queryKey: qk.quiz.publicQuizDetails.toKeyWithArgs({ quizId }),
+    queryFn: () =>
+      getPublicQuizDetails({ quizId, userId: authUser?.user.userId }),
+    queryKey: qk.quiz.publicQuizDetails.toKeyWithArgs({
+      quizId,
+      userId: authUser?.user.userId,
+    }),
   });
 
   return (
