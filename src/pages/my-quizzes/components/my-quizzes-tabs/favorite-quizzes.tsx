@@ -1,7 +1,8 @@
 import { qk } from "@api/query-keys";
 import { getUserFavoriteQuizzes } from "@api/quiz";
 import { PublicQuizCard } from "@components/quiz-card";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { QuizzesListSkeleton } from "@components/skeletons";
+import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { match, P } from "ts-pattern";
 
@@ -18,7 +19,7 @@ export const FavoriteQuizzes = () => {
       </Typography>
 
       {match($favoriteQuizzes)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <QuizzesListSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))

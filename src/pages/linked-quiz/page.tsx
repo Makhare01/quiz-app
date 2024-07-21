@@ -56,10 +56,7 @@ export const LinkedQuizPage = () => {
                 </Typography>
               </Box>
 
-              <StartLinkedQuizForm
-                quizId={quiz.quizId}
-                questionsId={quiz.questionsId}
-              />
+              <StartLinkedQuizForm quiz={quiz} />
             </Box>
           );
         })

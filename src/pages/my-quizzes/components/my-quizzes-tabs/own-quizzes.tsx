@@ -1,7 +1,8 @@
 import { qk } from "@api/query-keys";
 import { getMyQuizzes } from "@api/quiz";
 import { QuizCard } from "@components/quiz-card";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { MyQuizzesSkeleton } from "@components/skeletons";
+import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { match, P } from "ts-pattern";
 
@@ -18,7 +19,7 @@ export const OwnQuizzes = () => {
       </Typography>
 
       {match($myQuizzes)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <MyQuizzesSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Box>{error.message}</Box>
         ))

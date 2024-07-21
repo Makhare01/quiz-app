@@ -29,9 +29,13 @@ export const TUserAnswer = z.object({
     username: z.string(),
     email: z.string(),
   }),
-  questionsCount: z.number(),
   questionsId: z.string(),
   answers: z.array(TAnswer),
+  quizName: z.string(),
+  // TODO
+  quizCategory: z.string(),
+  questionsCount: z.number(),
+  quizEndDate: z.string().optional(),
 });
 
 export const TPublicQuestion = z.object({

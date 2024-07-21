@@ -1,7 +1,8 @@
 import { qk } from "@api/query-keys";
 import { getQuizQuestion } from "@api/questions";
 import { Table } from "@app/ui/table";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { TableSkeleton } from "@components/skeletons";
+import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { quizQuestionTypesOptions } from "@utils/questions";
 import { match, P } from "ts-pattern";
@@ -23,7 +24,9 @@ export const QuestionsTab = ({ questionsId }: Props) => {
       </Typography>
 
       {match($quizQuestion)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => (
+          <TableSkeleton columnsCount={3} rowsCount={5} />
+        ))
         .with({ isError: true, error: P.select() }, (error) => (
           <Box>{error.message}</Box>
         ))

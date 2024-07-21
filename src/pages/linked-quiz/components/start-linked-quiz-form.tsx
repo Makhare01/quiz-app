@@ -1,4 +1,5 @@
 import { startQuiz } from "@api/answer";
+import { PublicQuiz } from "@api/quiz";
 import { useAuthUser } from "@app/auth";
 import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
@@ -23,11 +24,10 @@ const TFormSchema = z.object({
 type FormValues = z.infer<typeof TFormSchema>;
 
 type Props = {
-  quizId: string;
-  questionsId: string;
+  quiz: PublicQuiz;
 };
 
-export const StartLinkedQuizForm = ({ quizId, questionsId }: Props) => {
+export const StartLinkedQuizForm = ({ quiz }: Props) => {
   const authUser = useAuthUser();
 
   const navigate = useNavigate();
@@ -56,16 +56,19 @@ export const StartLinkedQuizForm = ({ quizId, questionsId }: Props) => {
         onSubmit={handleSubmit((values) => {
           $startQuiz.mutate(
             {
-              quizId,
-              questionsId,
+              quizId: quiz.quizId,
+              questionsId: quiz.questionsId,
               email: values.email,
               username: values.username,
+              quizName: quiz.name,
+              category: quiz.category,
+              questionsCount: quiz.questionsCount,
             },
             {
               onSuccess: (answer) => {
                 navigate({
                   pathname: generatePath(paths.passQuiz, {
-                    quizId,
+                    quizId: quiz.quizId,
                     answerId: answer.answerId,
                   }),
                   search: createSearchParams({

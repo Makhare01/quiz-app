@@ -2,7 +2,8 @@ import { qk } from "@api/query-keys";
 import { getPublicQuizDetails } from "@api/quiz";
 import { useAuthUser } from "@app/auth";
 import { BackCloseButton } from "@components/back-close-button";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { StartQuizSkeleton } from "@components/skeletons";
+import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { quizCategoryOptions } from "@utils/quizzes";
 import { useNavigate, useParams } from "react-router-dom";
@@ -28,7 +29,7 @@ export const StartQuizPage = () => {
   return (
     <Box width={1} height={1} p={3} display="flex" flexDirection="column">
       {match($publicQuizDetails)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <StartQuizSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
@@ -71,10 +72,7 @@ export const StartQuizPage = () => {
                 <BackCloseButton onClick={() => navigate(-1)} />
               </Box>
 
-              <StartQuizButton
-                quizId={quiz.quizId}
-                questionsId={quiz.questionsId}
-              />
+              <StartQuizButton quiz={quiz} />
             </Box>
           );
         })

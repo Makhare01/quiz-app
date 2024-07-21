@@ -87,6 +87,8 @@ export const createRequest = <Path extends string>(
             .map((issue) => issue.message)
             .join(", ");
 
+          console.log({ error });
+
           throw requestError({
             type: "decode_error",
             message: errorMessages,
