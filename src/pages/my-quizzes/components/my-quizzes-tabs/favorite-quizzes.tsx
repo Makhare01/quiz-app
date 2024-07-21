@@ -24,7 +24,7 @@ export const FavoriteQuizzes = () => {
           <Typography>{error.message}</Typography>
         ))
         .with({ isSuccess: true, data: P.select() }, (quizzes) => {
-          return (
+          return quizzes.length > 0 ? (
             <Box
               sx={{
                 display: "flex",
@@ -41,6 +41,10 @@ export const FavoriteQuizzes = () => {
                 />
               ))}
             </Box>
+          ) : (
+            <Typography variant="h3" textAlign="center" mt={3}>
+              There are no Favorite quizzes
+            </Typography>
           );
         })
         .run()}

@@ -61,6 +61,7 @@ export const QuizCard = ({
     <Box
       sx={{
         width: 250,
+        minHeight: 1,
         bgcolor: "white",
         p: 2,
         border: 1,

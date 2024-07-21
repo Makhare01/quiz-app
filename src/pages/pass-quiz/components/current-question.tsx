@@ -129,11 +129,13 @@ export const CurrentQuestion = ({
               }}
             >
               <Box
-                flex={1}
-                py={3}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
+                sx={{
+                  flex: 1,
+                  display: "flex",
+                  lightingColor: "center",
+                  justifyContent: "center",
+                  py: 3,
+                }}
               >
                 <Box
                   width={1}
@@ -152,7 +154,12 @@ export const CurrentQuestion = ({
                     {question.question}
                   </Typography>
 
-                  <Box sx={{ width: "fit-content", minWidth: 450 }}>
+                  <Box
+                    sx={{
+                      width: "fit-content",
+                      minWidth: { xs: 350, sm: 450 },
+                    }}
+                  >
                     <GenerateQuestion
                       key={question.questionId}
                       question={question}
@@ -164,19 +171,24 @@ export const CurrentQuestion = ({
                 </Box>
               </Box>
               <Box
-                p={3}
-                py={4}
-                bgcolor="white"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
+                sx={{
+                  bgcolor: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  p: 3,
+                  py: 4,
+                }}
               >
                 <Box
-                  width={1}
-                  maxWidth={800}
-                  display="flex"
-                  alignItems="center"
-                  gap={8}
+                  sx={{
+                    width: 1,
+                    maxWidth: 800,
+                    display: "flex",
+                    flexDirection: { xs: "column", md: "row" },
+                    alignItems: "center",
+                    gap: { xs: 2, md: 8 },
+                  }}
                 >
                   <LinearProgress
                     label={
@@ -188,9 +200,12 @@ export const CurrentQuestion = ({
                     color="success"
                     type="submit"
                     sx={{
+                      width: { xs: 1, md: "auto" },
                       minWidth: 150,
                       color: "white",
                     }}
+                    disabled={$saveAnswer.isPending}
+                    isLoading={$saveAnswer.isPending}
                   >
                     {isLast ? "Finish" : "Next"}
                   </Button>

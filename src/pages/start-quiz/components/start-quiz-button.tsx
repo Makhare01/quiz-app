@@ -26,7 +26,7 @@ export const StartQuizButton = ({ quiz }: Props) => {
     questionsId: quiz.questionsId,
   };
 
-  const { data: userAnswers } = useQuery({
+  const { data: userAnswers, isLoading } = useQuery({
     queryKey: qk.answer.getUserAnswer.toKeyWithArgs(args),
     queryFn: () => getUserAnswers(args),
     meta: { disableError: true },
@@ -40,8 +40,6 @@ export const StartQuizButton = ({ quiz }: Props) => {
         0
       )
     );
-
-  console.log({ completedPercent, userAnswers });
 
   return (
     <Box flex={1} display="flex" alignItems="center" justifyContent="center">
@@ -84,8 +82,8 @@ export const StartQuizButton = ({ quiz }: Props) => {
             );
           }
         }}
-        disabled={$startQuiz.isPending}
-        isLoading={$startQuiz.isPending}
+        disabled={$startQuiz.isPending || isLoading}
+        isLoading={$startQuiz.isPending || isLoading}
       >
         {completedPercent
           ? `${completedPercent}% ${

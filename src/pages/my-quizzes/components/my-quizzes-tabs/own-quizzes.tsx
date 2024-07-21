@@ -25,7 +25,7 @@ export const OwnQuizzes = () => {
         ))
         .with({ isSuccess: true, data: P.select() }, (quizzes) => {
           return (
-            <Box display="flex" alignItems="center" gap={3} flexWrap="wrap">
+            <Box display="flex" alignItems="stretch" gap={3} flexWrap="wrap">
               {quizzes.map((quiz) => (
                 <QuizCard
                   key={quiz._id}

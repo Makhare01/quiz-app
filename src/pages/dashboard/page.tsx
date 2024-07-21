@@ -39,6 +39,7 @@ export const Dashboard = () => {
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           alignItems: "flex-start",
           mb: 3,
           pb: 2,
@@ -47,7 +48,7 @@ export const Dashboard = () => {
           gap: 3,
         }}
       >
-        <Box>
+        <Box sx={{ width: { xs: 1, md: 200 } }}>
           <Select
             value={category}
             onChange={(event) => {
@@ -62,8 +63,8 @@ export const Dashboard = () => {
               ...recordToOptions(quizCategoryOptions, "label"),
             ]}
             label="Category"
+            fullWidth
             sx={{
-              width: 200,
               borderRadius: 2,
             }}
           />
