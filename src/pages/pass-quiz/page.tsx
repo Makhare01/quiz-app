@@ -4,7 +4,8 @@ import { getPublicQuizDetails } from "@api/quiz";
 import { useAuthUser } from "@app/auth";
 import { paths } from "@app/routes";
 import { BackCloseButton } from "@components/back-close-button";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { PassQuizSkeleton } from "@components/skeletons";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import {
   generatePath,
@@ -51,7 +52,20 @@ export const PassQuizPage = () => {
   return (
     <Box width={1} height={1} display="flex" flexDirection="column">
       {match($publicQuizDetails)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              p: 3,
+            }}
+          >
+            <Skeleton variant="text" width={250} />
+            <Skeleton variant="text" width={300} />
+            <Skeleton variant="circular" width={40} height={40} />
+          </Box>
+        ))
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
@@ -88,7 +102,7 @@ export const PassQuizPage = () => {
         .run()}
 
       {match($userAnswers)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <PassQuizSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))

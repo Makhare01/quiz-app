@@ -2,12 +2,12 @@ import { qk } from "@api/query-keys";
 import { getQuizzesInProgress } from "@api/quiz";
 import { IconArrow } from "@app/assets/icons";
 import { InProgressQuizCard } from "@components/quiz-card";
+import { MyQuizzesSkeleton } from "@components/skeletons";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
-  CircularProgress,
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -32,7 +32,7 @@ export const QuizzesInProgress = () => {
   return (
     <Box my={5}>
       {match($inProgressQuizzes)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <MyQuizzesSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))

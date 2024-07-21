@@ -84,9 +84,6 @@ export const TPublicQuizzes = z.array(TPublicQuiz);
 const TInProgressQuiz = z.intersection(
   TUserAnswer,
   z.object({
-    answerId: z.string(),
-    quizName: z.string().optional(),
-    category: TQuizCategoryOptions,
     isFavorite: z.boolean().optional(),
   })
 );

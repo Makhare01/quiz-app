@@ -8,6 +8,9 @@ type StartQuizInput = {
   userId?: string;
   email: string;
   username: string;
+  quizName: string;
+  category: string;
+  questionsCount: number;
 };
 
 export const startQuiz = async ({
@@ -16,6 +19,9 @@ export const startQuiz = async ({
   userId,
   email,
   username,
+  quizName,
+  category,
+  questionsCount,
 }: StartQuizInput) => {
   return await request("/api/answer/:questionsId/start").post(
     {
@@ -27,6 +33,9 @@ export const startQuiz = async ({
         userId,
         email,
         username,
+        quizName,
+        category,
+        questionsCount,
       },
     },
     TAnswerId

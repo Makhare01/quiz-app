@@ -3,7 +3,7 @@ import { getPublicQuizzes } from "@api/quiz";
 import { Select } from "@app/ui/select";
 import { TextField } from "@app/ui/texfield";
 import { PublicQuizCard } from "@components/quiz-card";
-import { DashboardSkeleton } from "@components/skeletons";
+import { QuizzesListSkeleton } from "@components/skeletons";
 import { useSearch } from "@lib/hooks";
 import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -79,7 +79,7 @@ export const Dashboard = () => {
         />
       </Box>
       {match($publicQuizzes)
-        .with({ isLoading: true }, () => <DashboardSkeleton />)
+        .with({ isLoading: true }, () => <QuizzesListSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Box>{error.message}</Box>
         ))

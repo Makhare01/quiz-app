@@ -4,7 +4,8 @@ import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
 import { CopyText } from "@app/ui/copy-text";
 import { StarButton } from "@components/quiz-card/star-button";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { QuizDetailsSkeleton } from "@components/skeletons";
+import { Box, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
 import { match, P } from "ts-pattern";
@@ -22,7 +23,7 @@ export const MyQuizDetailsPage = () => {
   return (
     <Box width={1} height={1} p={3}>
       {match($quizDetails)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <QuizDetailsSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
@@ -82,6 +83,7 @@ export const MyQuizDetailsPage = () => {
                     quizId={quiz._id}
                     status={quiz.status}
                     onChange={$quizDetails.refetch}
+                    enabled={quiz.questionsCount > 0}
                   />
                   <Button
                     variant="outlined"
