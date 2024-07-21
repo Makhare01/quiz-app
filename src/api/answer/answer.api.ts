@@ -5,9 +5,12 @@ import { TAnswerId, TPublicQuestion, TUserAnswer } from "./answer.schema";
 type StartQuizInput = {
   questionsId: string;
   quizId: string;
-  userId: string;
+  userId?: string;
   email: string;
   username: string;
+  quizName: string;
+  category: string;
+  questionsCount: number;
 };
 
 export const startQuiz = async ({
@@ -16,6 +19,9 @@ export const startQuiz = async ({
   userId,
   email,
   username,
+  quizName,
+  category,
+  questionsCount,
 }: StartQuizInput) => {
   return await request("/api/answer/:questionsId/start").post(
     {
@@ -27,6 +33,9 @@ export const startQuiz = async ({
         userId,
         email,
         username,
+        quizName,
+        category,
+        questionsCount,
       },
     },
     TAnswerId
@@ -35,15 +44,14 @@ export const startQuiz = async ({
 
 export type GetUserAnswerInput = {
   answerId?: string;
-  answersUser?: {
-    userId: string;
-    questionsId: string;
-  };
+  email: string;
+  questionsId?: string;
 };
 
 export const getUserAnswers = async ({
   answerId,
-  answersUser,
+  email,
+  questionsId,
 }: GetUserAnswerInput) => {
   const query = new URLSearchParams();
 
@@ -51,10 +59,11 @@ export const getUserAnswers = async ({
     query.set("answerId", answerId);
   }
 
-  if (answersUser) {
-    query.set("userId", answersUser.userId);
-    query.set("questionsId", answersUser.questionsId);
+  if (questionsId) {
+    query.set("questionsId", questionsId);
   }
+
+  query.set("email", email);
 
   return await request("/api/answer/details").get(
     {
@@ -98,6 +107,7 @@ type SaveAnswerInput = {
   answers: Array<string>;
   order: number;
   isLast: boolean;
+  userEmail: string;
 };
 
 export const saveAnswer = async ({
@@ -108,6 +118,7 @@ export const saveAnswer = async ({
   answers,
   order,
   isLast,
+  userEmail,
 }: SaveAnswerInput) => {
   return await request("/api/answer/:answerId/save").post({
     body: {
@@ -117,6 +128,7 @@ export const saveAnswer = async ({
       answers,
       order,
       isLast,
+      email: userEmail,
     },
     params: {
       answerId,

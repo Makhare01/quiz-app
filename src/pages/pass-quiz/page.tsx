@@ -1,15 +1,27 @@
 import { getUserAnswers } from "@api/answer";
 import { qk } from "@api/query-keys";
 import { getPublicQuizDetails } from "@api/quiz";
+import { useAuthUser } from "@app/auth";
 import { paths } from "@app/routes";
 import { BackCloseButton } from "@components/back-close-button";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { PassQuizSkeleton } from "@components/skeletons";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import { generatePath, useNavigate, useParams } from "react-router-dom";
+import {
+  generatePath,
+  useNavigate,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { match, P } from "ts-pattern";
-import { CurrentQuestion, PasswdQuizView } from "./components";
+import { CurrentQuestion, PassedQuizView } from "./components";
 
 export const PassQuizPage = () => {
+  const authUser = useAuthUser();
+  const [searchParams] = useSearchParams();
+
+  const guestUserEmail = searchParams.get("email");
+
   const navigate = useNavigate();
   const { quizId, answerId } = useParams() as {
     quizId: string;
@@ -17,19 +29,43 @@ export const PassQuizPage = () => {
   };
 
   const $publicQuizDetails = useQuery({
-    queryFn: () => getPublicQuizDetails({ quizId }),
-    queryKey: qk.quiz.publicQuizDetails.toKeyWithArgs({ quizId }),
+    queryFn: () =>
+      getPublicQuizDetails({ quizId, userId: authUser?.user.userId }),
+    queryKey: qk.quiz.publicQuizDetails.toKeyWithArgs({
+      quizId,
+      userId: authUser?.user.userId,
+    }),
   });
 
+  const email = guestUserEmail ?? authUser?.user.email;
+
+  const args = {
+    answerId,
+    email: email ?? "",
+  };
+
   const $userAnswers = useQuery({
-    queryKey: qk.answer.getUserAnswer.toKeyWithArgs({ answerId }),
-    queryFn: () => getUserAnswers({ answerId }),
+    queryKey: qk.answer.getUserAnswer.toKeyWithArgs(args),
+    queryFn: () => getUserAnswers(args),
   });
 
   return (
     <Box width={1} height={1} display="flex" flexDirection="column">
       {match($publicQuizDetails)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              p: 3,
+            }}
+          >
+            <Skeleton variant="text" width={250} />
+            <Skeleton variant="text" width={300} />
+            <Skeleton variant="circular" width={40} height={40} />
+          </Box>
+        ))
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
@@ -66,7 +102,7 @@ export const PassQuizPage = () => {
         .run()}
 
       {match($userAnswers)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <PassQuizSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
@@ -77,7 +113,7 @@ export const PassQuizPage = () => {
           const isFinished = answer.questionsCount === answer.answers.length;
 
           if (isFinished) {
-            return <PasswdQuizView />;
+            return <PassedQuizView userEmail={answer.user.email} />;
           }
 
           return (
@@ -91,6 +127,7 @@ export const PassQuizPage = () => {
               answerId={answer._id}
               isLast={answer.questionsCount === answer.answers.length + 1}
               quizId={quizId}
+              email={answer.user.email}
             />
           );
         })

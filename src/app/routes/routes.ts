@@ -1,16 +1,11 @@
 import { createRoute } from "./create-route";
 import { paths } from "./paths";
 
-export const authRoutes = [
+const sharedRoutes = [
   createRoute({
-    path: paths.dashboard,
-    factory: () => import("../../pages/dashboard"),
-    title: "Dashboard",
-  }),
-  createRoute({
-    path: paths.startQuiz,
-    factory: () => import("../../pages/start-quiz"),
-    title: "Start quiz",
+    path: paths.linkedQuiz,
+    factory: () => import("../../pages/linked-quiz"),
+    title: "Quiz",
   }),
   createRoute({
     path: paths.passQuiz,
@@ -21,6 +16,19 @@ export const authRoutes = [
     path: paths.quizResult,
     factory: () => import("../../pages/result"),
     title: "Quiz result",
+  }),
+];
+
+export const authRoutes = [
+  createRoute({
+    path: paths.dashboard,
+    factory: () => import("../../pages/dashboard"),
+    title: "Dashboard",
+  }),
+  createRoute({
+    path: paths.startQuiz,
+    factory: () => import("../../pages/start-quiz"),
+    title: "Start quiz",
   }),
   createRoute({
     path: paths.myQuizzes,
@@ -52,6 +60,7 @@ export const authRoutes = [
     factory: () => import("../../pages/profile"),
     title: "Profile",
   }),
+  ...sharedRoutes,
 ];
 
 export const unauthRoutes = [
@@ -65,6 +74,7 @@ export const unauthRoutes = [
     factory: () => import("../../pages/sign-up"),
     title: "Sign up",
   }),
+  ...sharedRoutes,
 ];
 
 export const routes = [...authRoutes, ...unauthRoutes];

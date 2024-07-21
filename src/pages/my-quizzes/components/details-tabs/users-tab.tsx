@@ -3,7 +3,11 @@ import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
 import { Table } from "@app/ui/table";
 import { Box, Typography } from "@mui/material";
-import { generatePath, useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  generatePath,
+  useNavigate,
+} from "react-router-dom";
 
 type Props = {
   users: Array<QuizUser>;
@@ -37,7 +41,7 @@ export const UsersTab = ({ users }: Props) => {
         ]}
         rows={users.map((user) => {
           return {
-            key: user.userId,
+            key: user.userId ?? user.email,
             cells: [
               user.username,
               user.email,
@@ -46,11 +50,14 @@ export const UsersTab = ({ users }: Props) => {
                 disabled={!user.isFinished}
                 onClick={() => {
                   if (user.isFinished) {
-                    navigate(
-                      generatePath(paths.quizResult, {
+                    navigate({
+                      pathname: generatePath(paths.quizResult, {
                         answerId: user.answerId,
-                      })
-                    );
+                      }),
+                      search: createSearchParams({
+                        email: user.email,
+                      }).toString(),
+                    });
                   }
                 }}
               >

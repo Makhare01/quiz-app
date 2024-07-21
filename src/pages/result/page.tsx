@@ -1,19 +1,33 @@
 import { getUserAnswers } from "@api/answer";
 import { qk } from "@api/query-keys";
-import { Box, CircularProgress, Stack, Typography } from "@mui/material";
+import { useAuthUser } from "@app/auth";
+import { ResultPageSkeleton } from "@components/skeletons";
+import { Box, Stack, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { match, P } from "ts-pattern";
 
 export const ResultPage = () => {
+  const authUser = useAuthUser();
+  const [searchParams] = useSearchParams();
+
+  const guestUserEmail = searchParams.get("email");
+
   const { answerId } = useParams() as {
     answerId: string;
   };
 
+  const email = guestUserEmail ?? authUser?.user.email;
+
+  const args = {
+    answerId,
+    email: email ?? "",
+  };
+
   const $userAnswers = useQuery({
-    queryKey: qk.answer.getUserAnswer.toKeyWithArgs({ answerId }),
-    queryFn: () => getUserAnswers({ answerId }),
+    queryKey: qk.answer.getUserAnswer.toKeyWithArgs(args),
+    queryFn: () => getUserAnswers(args),
   });
 
   return (
@@ -22,7 +36,7 @@ export const ResultPage = () => {
         Quiz result page
       </Typography>
       {match($userAnswers)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <ResultPageSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
@@ -37,7 +51,16 @@ export const ResultPage = () => {
               <Typography variant="h3" fontWeight={700} my={3}>
                 User
               </Typography>
-              <Box bgcolor="white" p={2} borderRadius={2}>
+              <Box
+                sx={{
+                  bgcolor: "white",
+                  p: 2,
+                  borderRadius: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 1,
+                }}
+              >
                 <Typography variant="body1">
                   Username:{" "}
                   <Typography component="span" variant="body1" fontWeight={600}>
@@ -50,6 +73,18 @@ export const ResultPage = () => {
                     {userAnswers.user.email}
                   </Typography>
                 </Typography>
+                {userAnswers.quizEndDate && (
+                  <Typography variant="body1">
+                    Quiz end date:{" "}
+                    <Typography
+                      component="span"
+                      variant="body1"
+                      fontWeight={600}
+                    >
+                      {format(userAnswers.quizEndDate, "dd MMM yyyy")}
+                    </Typography>
+                  </Typography>
+                )}
               </Box>
 
               <Typography variant="h3" fontWeight={700} my={3}>

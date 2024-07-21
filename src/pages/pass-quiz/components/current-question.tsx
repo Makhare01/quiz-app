@@ -3,11 +3,16 @@ import { qk } from "@api/query-keys";
 import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
 import { LinearProgress } from "@app/ui/linear-progress";
+import { PassQuizSkeleton } from "@components/skeletons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { generatePath, useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  generatePath,
+  useNavigate,
+} from "react-router-dom";
 import { match, P } from "ts-pattern";
 import { z } from "zod";
 import { GenerateQuestion } from "./generate-question";
@@ -28,6 +33,7 @@ type Props = {
   };
   answerId: string;
   isLast: boolean;
+  email: string;
 };
 
 export const CurrentQuestion = ({
@@ -37,6 +43,7 @@ export const CurrentQuestion = ({
   progress,
   answerId,
   isLast,
+  email,
 }: Props) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -68,7 +75,7 @@ export const CurrentQuestion = ({
   return (
     <Box flex={1}>
       {match($currentQuestion)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <PassQuizSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
@@ -88,22 +95,27 @@ export const CurrentQuestion = ({
                     order: question.order,
                     questionId: question.questionId,
                     isLast,
+                    userEmail: email,
                   },
                   {
                     onSuccess: () => {
                       reset();
 
                       if (isLast) {
-                        navigate(
-                          generatePath(paths.quizResult, {
+                        navigate({
+                          pathname: generatePath(paths.quizResult, {
                             answerId,
-                          })
-                        );
+                          }),
+                          search: createSearchParams({
+                            email,
+                          }).toString(),
+                        });
                         return;
                       }
                       queryClient.invalidateQueries({
                         queryKey: qk.answer.getUserAnswer.toKeyWithArgs({
                           answerId,
+                          email,
                         }),
                       });
                     },

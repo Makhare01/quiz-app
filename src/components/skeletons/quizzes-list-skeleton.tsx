@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
 
-export const DashboardSkeleton = () => {
+export const QuizzesListSkeleton = () => {
   return (
     <Box display="flex" alignItems="center" gap={3} flexWrap="wrap">
       {Array.from({ length: 10 }).map((_, index) => {

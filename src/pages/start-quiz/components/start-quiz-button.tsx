@@ -1,5 +1,6 @@
 import { getUserAnswers, startQuiz } from "@api/answer";
 import { qk } from "@api/query-keys";
+import { PublicQuiz } from "@api/quiz";
 import { useAuthUser } from "@app/auth";
 import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
@@ -8,11 +9,10 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { generatePath, useNavigate } from "react-router-dom";
 
 type Props = {
-  quizId: string;
-  questionsId: string;
+  quiz: PublicQuiz;
 };
 
-export const StartQuizButton = ({ quizId, questionsId }: Props) => {
+export const StartQuizButton = ({ quiz }: Props) => {
   const authUser = useAuthUser();
 
   const navigate = useNavigate();
@@ -22,10 +22,8 @@ export const StartQuizButton = ({ quizId, questionsId }: Props) => {
   });
 
   const args = {
-    answersUser: {
-      userId: authUser?.user.userId ?? "",
-      questionsId,
-    },
+    email: authUser?.user.email ?? "",
+    questionsId: quiz.questionsId,
   };
 
   const { data: userAnswers } = useQuery({
@@ -42,6 +40,8 @@ export const StartQuizButton = ({ quizId, questionsId }: Props) => {
         0
       )
     );
+
+  console.log({ completedPercent, userAnswers });
 
   return (
     <Box flex={1} display="flex" alignItems="center" justifyContent="center">
@@ -62,17 +62,20 @@ export const StartQuizButton = ({ quizId, questionsId }: Props) => {
             const { user } = authUser;
             $startQuiz.mutate(
               {
-                quizId,
+                quizId: quiz.quizId,
+                questionsId: quiz.questionsId,
                 userId: user.userId,
-                questionsId,
                 email: user.email,
                 username: `${user.firstName} ${user.lastName}`,
+                quizName: quiz.name,
+                category: quiz.category,
+                questionsCount: quiz.questionsCount,
               },
               {
                 onSuccess: (answer) => {
                   navigate(
                     generatePath(paths.passQuiz, {
-                      quizId,
+                      quizId: quiz.quizId,
                       answerId: answer.answerId,
                     })
                   );

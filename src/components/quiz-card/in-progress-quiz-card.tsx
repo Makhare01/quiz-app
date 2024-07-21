@@ -1,4 +1,4 @@
-import { InProgressQuiz } from "@api/quiz";
+import { InProgressQuiz, QuizCategoryOptions } from "@api/quiz";
 import { paths } from "@app/routes";
 import { Button } from "@app/ui/button";
 import { LinearProgress } from "@app/ui/linear-progress";
@@ -15,7 +15,8 @@ type Props = {
 export const InProgressQuizCard = ({ quiz, onFavoriteChange }: Props) => {
   const navigate = useNavigate();
 
-  const { label, Icon, color } = quizCategoryOptions[quiz.category];
+  const { label, Icon, color } =
+    quizCategoryOptions[quiz.quizCategory as QuizCategoryOptions];
 
   const percent = ((quiz.answers.length / quiz.questionsCount) * 100).toFixed(
     0
@@ -71,7 +72,7 @@ export const InProgressQuizCard = ({ quiz, onFavoriteChange }: Props) => {
           if (isFinished) {
             navigate(
               generatePath(paths.quizResult, {
-                answerId: quiz.answerId,
+                answerId: quiz._id,
               })
             );
 
@@ -81,7 +82,7 @@ export const InProgressQuizCard = ({ quiz, onFavoriteChange }: Props) => {
           navigate(
             generatePath(paths.passQuiz, {
               quizId: quiz.quizId,
-              answerId: quiz.answerId,
+              answerId: quiz._id,
             })
           );
         }}

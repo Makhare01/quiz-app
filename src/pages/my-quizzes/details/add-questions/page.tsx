@@ -3,12 +3,8 @@ import { getQuizQuestion } from "@api/questions";
 import { getQuizDetails } from "@api/quiz";
 import { paths } from "@app/routes";
 import { BackCloseButton } from "@components/back-close-button";
-import {
-  Box,
-  CircularProgress,
-  LinearProgress,
-  Typography,
-} from "@mui/material";
+import { EditQuestionsSkeleton } from "@components/skeletons";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { AddQuestionForm } from "@pages/my-quizzes/components";
 import { useQuery } from "@tanstack/react-query";
 import { generatePath, useNavigate, useParams } from "react-router-dom";
@@ -35,7 +31,18 @@ export const AddQuizQuestionsPage = () => {
   return (
     <Box width={1} height={1} p={3} display="flex" flexDirection="column">
       {match($quizDetails)
-        .with({ isLoading: true }, () => <LinearProgress />)
+        .with({ isLoading: true }, () => (
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Skeleton variant="text" width={250} />
+            <Skeleton variant="circular" width={40} height={40} />
+          </Box>
+        ))
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
@@ -66,7 +73,7 @@ export const AddQuizQuestionsPage = () => {
         .run()}
 
       {match($quizQuestion)
-        .with({ isLoading: true }, () => <CircularProgress />)
+        .with({ isLoading: true }, () => <EditQuestionsSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
           <Typography>{error.message}</Typography>
         ))
