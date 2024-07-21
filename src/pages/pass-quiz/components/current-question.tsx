@@ -132,7 +132,7 @@ export const CurrentQuestion = ({
                 sx={{
                   flex: 1,
                   display: "flex",
-                  lightingColor: "center",
+                  alignItems: "center",
                   justifyContent: "center",
                   py: 3,
                 }}
