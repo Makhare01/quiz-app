@@ -15,7 +15,7 @@ export const AppLogo = () => {
         display: "flex",
         alignItems: "center",
         cursor: "pointer",
-        width: "15%",
+        width: 1,
       }}
       onClick={() => {
         navigate(paths.dashboard);
@@ -45,7 +45,7 @@ export const NavBar = () => {
         height: 75,
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 1, width: "15%" }}>
         <IconBurgerMenu
           sx={{
             cursor: "pointer",
