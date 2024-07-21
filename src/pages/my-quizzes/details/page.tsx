@@ -21,7 +21,7 @@ export const MyQuizDetailsPage = () => {
   });
 
   return (
-    <Box width={1} height={1} p={3}>
+    <Box width={1} height={1} p={3} maxHeight={1}>
       {match($quizDetails)
         .with({ isLoading: true }, () => <QuizDetailsSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
@@ -29,7 +29,7 @@ export const MyQuizDetailsPage = () => {
         ))
         .with({ isSuccess: true, data: P.select() }, (quiz) => {
           return (
-            <Box>
+            <Box sx={{ flex: 1, maxHeight: 1, overflow: "auto" }}>
               <Box
                 sx={{
                   display: "flex",

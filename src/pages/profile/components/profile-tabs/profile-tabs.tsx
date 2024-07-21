@@ -20,7 +20,7 @@ const tabs: Array<Tab<TabTypes>> = [
 
 export const ProfileTabs = () => {
   return (
-    <Box sx={{ width: 1, maxWidth: { xs: 420, sm: 680 } }}>
+    <Box sx={{ width: 1, maxWidth: { xs: 420, sm: 680 }, p: 3 }}>
       <Tabs<TabTypes> defaultTab="info" tabs={tabs} />
     </Box>
   );
