@@ -63,7 +63,7 @@ export const PublicQuizCard = ({ quiz, onFavoriteChange }: Props) => {
         }}
       />
 
-      <Typography variant="h3" fontWeight={700}>
+      <Typography variant="h3" fontWeight={700} textAlign="center">
         {quiz.name}
       </Typography>
     </Box>

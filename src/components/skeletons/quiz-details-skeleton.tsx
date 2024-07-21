@@ -4,11 +4,14 @@ export const QuizDetailsSkeleton = () => {
   return (
     <Box>
       <Box
-        display="flex"
-        alignItems="flex-start"
-        justifyContent="stretch"
-        gap={3}
-        mb={5}
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: "flex-start",
+          justifyContent: "stretch",
+          gap: 3,
+          mb: 5,
+        }}
       >
         <Box>
           <Skeleton variant="text" width={200} />
@@ -16,16 +19,32 @@ export const QuizDetailsSkeleton = () => {
         </Box>
 
         <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="flex-end"
-          gap={2}
-          flex={1}
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: "center",
+            justifyContent: { xs: "flex-start", md: "flex-end" },
+            gap: 2,
+            flex: 1,
+            width: 1,
+          }}
         >
-          <Skeleton variant="rounded" width={130} height={45} />
-          <Skeleton variant="rounded" width={130} height={45} />
-          <Skeleton variant="rounded" width={130} height={45} />
-          <Skeleton variant="rounded" width={130} height={45} />
+          <Skeleton
+            variant="rounded"
+            sx={{ width: { xs: 1, sm: 130 }, height: 45 }}
+          />
+          <Skeleton
+            variant="rounded"
+            sx={{ width: { xs: 1, sm: 130 }, height: 45 }}
+          />
+          <Skeleton
+            variant="rounded"
+            sx={{ width: { xs: 1, sm: 130 }, height: 45 }}
+          />
+          <Skeleton
+            variant="rounded"
+            sx={{ width: { xs: 1, sm: 130 }, height: 45 }}
+          />
         </Box>
       </Box>
 

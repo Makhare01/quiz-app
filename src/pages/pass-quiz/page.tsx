@@ -71,7 +71,15 @@ export const PassQuizPage = () => {
         ))
         .with({ isSuccess: true, data: P.select() }, (quiz) => {
           return (
-            <Box display="flex" alignItems="center" p={3} gap={2}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                alignItems: { xs: "flex-start", md: "center" },
+                p: 3,
+                gap: 2,
+              }}
+            >
               <Typography
                 variant="h3"
                 width={130}
@@ -81,11 +89,19 @@ export const PassQuizPage = () => {
                 Questions: {quiz.questionsCount}
               </Typography>
               <Box width={1}>
-                <Typography variant="h2" fontWeight={700} textAlign="center">
+                <Typography
+                  variant="h2"
+                  fontWeight={700}
+                  textAlign={{ xs: "start", md: "center" }}
+                >
                   {quiz.name}
                 </Typography>
               </Box>
-              <Box width={130} display="flex" justifyContent="flex-end">
+              <Box
+                width={130}
+                display="flex"
+                justifyContent={{ xs: "flex-start", md: "flex-end" }}
+              >
                 <BackCloseButton
                   onClick={() =>
                     navigate(

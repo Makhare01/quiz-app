@@ -48,7 +48,7 @@ export const QuizForm = ({
     ({ currentLocation, nextLocation }) =>
       isDirty &&
       currentLocation.pathname !== nextLocation.pathname &&
-      !nextLocation.pathname.includes("add-questions")
+      !nextLocation.pathname.includes("my-quizzes")
   );
 
   return (

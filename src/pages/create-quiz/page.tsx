@@ -23,9 +23,8 @@ export const CreateQuiz = () => {
         $createQuiz.mutate(values, {
           onSuccess: (quiz) => {
             navigate(
-              generatePath(paths.addQuizQuestions, {
+              generatePath(paths.myQuizDetails, {
                 quizId: quiz._id,
-                questionsId: quiz.questionsId,
               })
             );
           },

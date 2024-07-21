@@ -88,7 +88,7 @@ export const GenerateQuestion = ({
             render={({ field }) => (
               <RadioGroup
                 {...field}
-                sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                sx={{ display: "flex", flexDirection: "column", gap: 2, p: 0 }}
               >
                 {options.map((option, index) => (
                   <Radio

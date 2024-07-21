@@ -1,7 +1,9 @@
 export { IconArrow } from "./arrow";
+export { IconBurgerMenu } from "./burger-menu";
 export { IconCheck } from "./check";
 export { IconClose } from "./close";
 export { IconDraggableDots } from "./draggable-dots";
+export { IconEyeClose, IconEyeOpen } from "./eye";
 export { IconLink } from "./link";
 export { IconPlus } from "./plus";
 export { IconQuiz } from "./quiz";

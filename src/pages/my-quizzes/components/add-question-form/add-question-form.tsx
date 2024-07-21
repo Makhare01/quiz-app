@@ -228,10 +228,13 @@ export const AddQuestionForm = ({
                               <IconTrashBin sx={{ color: "error.light" }} />
                             </IconButton>
                             <Box
-                              my={3}
-                              display="flex"
-                              alignItems="flex-start"
-                              gap={3}
+                              sx={{
+                                display: "flex",
+                                flexDirection: { xs: "column", md: "row" },
+                                alignItems: "flex-start",
+                                gap: 3,
+                                my: 3,
+                              }}
                             >
                               <Controller
                                 control={control}
@@ -240,7 +243,7 @@ export const AddQuestionForm = ({
                                   <TextField
                                     {...field}
                                     {...getFieldError(error)}
-                                    label="Question"
+                                    label={`Question ${index + 1}`}
                                     placeholder="Write the question..."
                                     multiline
                                     rows={3}

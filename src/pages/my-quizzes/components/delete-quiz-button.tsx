@@ -23,8 +23,13 @@ export const DeleteQuizButton = ({ quizId, quizName }: Props) => {
   });
 
   return (
-    <Box>
-      <Button variant="outlined" color="error" onClick={isOpen.setTrue}>
+    <Box sx={{ width: { xs: 1, sm: "auto" } }}>
+      <Button
+        variant="outlined"
+        color="error"
+        onClick={isOpen.setTrue}
+        fullWidth
+      >
         Delete
       </Button>
 
