@@ -1,6 +1,7 @@
 import { PathValue, paths } from "@app/routes";
-import { Stack } from "@mui/material";
+import { Box, Divider, Stack } from "@mui/material";
 import { MenItem } from "./menu-item";
+import { AppLogo } from "./nav-bar";
 
 export type MenuItem = {
   name: string;
@@ -24,7 +25,23 @@ const menuItems: Array<MenuItem> = [
 
 export const AppMenu = () => {
   return (
-    <Stack flexDirection="row" gap={3} alignItems="center">
+    <Stack
+      flexDirection={{ xs: "column", md: "row" }}
+      gap={3}
+      alignItems={{ xs: "flex-start", md: "center" }}
+      minWidth={300}
+      p={{ xs: 3, md: 0 }}
+    >
+      <Box
+        sx={{
+          display: { xs: "block", md: "none" },
+          width: 1,
+        }}
+      >
+        <AppLogo />
+
+        <Divider sx={{ my: 1 }} />
+      </Box>
       {menuItems.map((menuItem) => (
         <MenItem key={menuItem.path} menuItem={menuItem} />
       ))}

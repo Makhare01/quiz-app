@@ -35,8 +35,14 @@ export const QuizStatusButton = ({
       arrow
       placement="top"
     >
-      <Box>
-        <Button variant="outlined" onClick={isOpen.setTrue} disabled={!enabled}>
+      <Box sx={{ width: { xs: 1, sm: "auto" } }}>
+        <Button
+          variant="outlined"
+          onClick={isOpen.setTrue}
+          disabled={!enabled}
+          fullWidth
+          sx={{ whiteSpace: "nowrap" }}
+        >
           Mark as: {quizStatusOptions[oppositeStatus]}
         </Button>
 

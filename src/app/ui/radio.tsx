@@ -55,7 +55,7 @@ export const Radio = ({ label, value, ...radioProps }: Props) => {
       label={label}
       sx={{
         p: 2,
-        my: 1,
+        m: 0,
         bgcolor: "white",
         borderRadius: 2,
       }}

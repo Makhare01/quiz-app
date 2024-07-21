@@ -21,7 +21,7 @@ export const MyQuizDetailsPage = () => {
   });
 
   return (
-    <Box width={1} height={1} p={3}>
+    <Box width={1} height={1} p={3} maxHeight={1}>
       {match($quizDetails)
         .with({ isLoading: true }, () => <QuizDetailsSkeleton />)
         .with({ isError: true, error: P.select() }, (error) => (
@@ -29,13 +29,16 @@ export const MyQuizDetailsPage = () => {
         ))
         .with({ isSuccess: true, data: P.select() }, (quiz) => {
           return (
-            <Box>
+            <Box sx={{ flex: 1, maxHeight: 1, overflow: "auto" }}>
               <Box
-                display="flex"
-                alignItems="flex-start"
-                justifyContent="stretch"
-                gap={3}
-                mb={5}
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", md: "row" },
+                  alignItems: "flex-start",
+                  justifyContent: "stretch",
+                  gap: 3,
+                  mb: 5,
+                }}
               >
                 <Box>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
@@ -73,11 +76,15 @@ export const MyQuizDetailsPage = () => {
                 </Box>
 
                 <Box
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="flex-end"
-                  gap={2}
-                  flex={1}
+                  sx={{
+                    display: "flex",
+                    flexDirection: { xs: "column", sm: "row" },
+                    alignItems: "center",
+                    justifyContent: { xs: "flex-start", md: "flex-end" },
+                    gap: 2,
+                    flex: 1,
+                    width: 1,
+                  }}
                 >
                   <QuizStatusButton
                     quizId={quiz._id}
@@ -98,6 +105,7 @@ export const MyQuizDetailsPage = () => {
                     }}
                     sx={{
                       whiteSpace: "nowrap",
+                      width: { xs: 1, sm: "auto" },
                     }}
                   >
                     {quiz.questionsCount > 0
@@ -113,6 +121,7 @@ export const MyQuizDetailsPage = () => {
                         })
                       );
                     }}
+                    sx={{ width: { xs: 1, sm: "auto" } }}
                   >
                     Edit
                   </Button>
